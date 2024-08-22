@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base target="_blank">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Grechen+Fuemen&family=Barlow+Condensed:wght@200;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #b8b8b8; 
+      background-image: url(akrs-bg.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position-y: -100px;
+    }
+
+    @media (min-width: 1300px) { body {background-position-y: -300px;} }
+    @media (min-width: 1600px) { body {background-position-y: -400px;} }
+    @media (min-width: 1900px) { body {background-position-y: -500px;} }
+    @media (min-width: 2500px) { body {background-position-y: -700px;} }
+    @media (min-width: 3000px) { body {background-position-y: -800px;} }
+
+    * { font-family: 'Barlow Condensed', sans-serif; color: white; }
+    
+    div#container { margin: 150px auto; width: 75%; text-align: left; }
+    #logo { width: 250px; height: 250px; }
+
+    p { font-family:Grechen Fuemen; color:#a0a0a0; font-size: 40px; margin: 20px 0; position:relative; }
+    a { color: rgb(0, 187, 255); text-decoration: none; font-weight: bold;}
+    a.sc {color:#ff3300;}
+    a.bp {color:#0cfe95;}
+    a.sp {color:#26e167;}
+    a.bl {color: #f12c18;}
+
+    ul { list-style-type: none; width: 400px; margin:0; padding:0; }
+    li { display: block; font-size: 23px; font-weight: 300; padding-bottom: 10px; }
+    /*
+    li:after {content: "·"; padding-left:10px; padding-right:10px;}
+    li:last-child { padding-right:0; }
+    li:last-child:after { content: ""; }
+    */
+  </style>
+</head>
+
+<body>
+<div id="container">
+    <div><img id="logo" src="akrs-logo.svg"></div>
+    <p>Beats & Sounds</p>
+    <ul>
+      <li>Tunes & mixes on <a class="sc" href="https://soundcloud.com/akrs">SoundCloud</a></li>
+      <li>Releases on <a class="bp" href="https://www.beatport.com/artist/akrs/564375">Beatport</a> & <a class="sp" href="https://open.spotify.com/artist/3RlzcumL1gMpwPRt76kOPw?si=_yFGH42ZT_yPgEeZkm-odQ">Spotify</a></li> 
+      <li>Designed sounds on <a class="bl" href="https://www.bandlab.com/sounds/pack/akrs-contours-vol-1">Bandlab</a></li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-443787-9']);
+  _gaq.push(['_setDomainName', 'ak.rs']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</html>
+
