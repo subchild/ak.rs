@@ -1,2 +1,0 @@
-# ak.rs
- akrs-web

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en-US"> 
+<head>
+<base target="_blank">
+<title>Slideshowify - Project Home</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="image_src" href="img/slideshowify-snap.png" />
+<script src="//code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="js/jquery.transit.min.js"></script>
+<script src="js/jquery.slideshowify.min.js"></script>
+</head>
+
+<body>
+
+<div id="content">
+	<img src="img/logo-slideshowify.png">
+	<p>
+		Slideshowify is a super easy-to-use jQuery plugin for generating image slideshows with a 
+		<a href="http://en.wikipedia.org/wiki/Ken_Burns_effect">Ken Burns Effect</a>, where 
+		images which don't fit the screen exactly (generally the case) are cropped and either 
+		panned across the screen or zoomed in a randomly determined direction.
+	</p>
+	
+	<div id="target1" class="target"></div>
+
+	<a class="primary-button" href="demo-full.html">Fullscreen* Demo</a>
+	<p class="note">
+		* Fullscreen refers to the entire <em>browser window</em>. If user's platform supports 
+		true fullscreen mode for web browsing, they can manually activate it and enjoy the slideshow
+		without the browser chrome. 
+	</p>
+
+	<h3>Basic Use</h3>
+	<p>It really can't be any simpler. Once you include the necessary scripts,  this works:</p>
+<code>$('img').slideshowify(); <span class="comment">// Slideshowify all images on page. You may not want this.</span></code>
+	<p>Cake, right?</p>
+
+
+	<h3>A Note Regarding Image (pre) Loading</h3>
+	<p>
+		While the plugin is smart enough to preload the following image (which 
+		<span style="text-decoration:line-through;">likely</span> hopefully takes less time than the current animation) 
+		and knows to stop pre-loading once all images have been loaded, you may want to ensure that the 
+		browser itself doesn't start loading all of the images on page load by keeping them out of the source. 
+	</p>
+
+	<h3>Customization</h3>
+	<p>
+		Slideshowify is configurable. Without any parameters, the plugin with apply the
+		effect to the entire browser window with default animation settings. To restrict the 
+		slideshow to a specific element, do something like this:
+	</p>
+<code>$('#someDiv img').slideshowify({ parentEl:'#targetDiv' });
+<span class="comment">// parentEl will be injected with each image to animate</code>
+
+	<p>
+		Slideshowify also extends jQuery with a method which allows it to be used without a selector.
+		The example below shows this, along with other supported parameters.
+	</p>
+<code>$.slideshowify({
+	dataUrl     : "http://gallerama.com/services/gallery/get.php?gid=2107&versions[]=9",
+	dataType    : "jsonp",
+	parentEl    : "#target",
+	randomize   : true, <span class="comment">// default is false</span>
+	aniSpeedMin : 8000, <span class="comment">// shortest animation will be 8 seconds</span>
+	aniSpeedMax : 10000, <span class="comment">// longest animation will be 10 seconds</span>
+	filterFn    : function(imgs){ <span class="comment">// sanitize or filter data</span>
+		var fixedImgs = [];
+		$.each(imgs, function(i, img){
+			fixedImgs.push($.extend(img.versions["9"], {id:img.id}));
+		});
+		return fixedImgs;
+	}
+});
+</code>
+
+	<p>
+		It should be pointed out that Slideshowify can be instantiated multiple times on a single
+		page. I imagine this could produce effects which range from pleasantly subtle to cataclysmic.
+	</p>
+
+	<h3>A Plugin Without Hooks is Simply...well, Hookless</h3>
+	<p>
+		Slideshowify fires a number of events which can be hooked up for additional
+		customizations.
+	</p>
+<code>beforeFadeOut afterFadeOut afterFadeIn beforeFadeIn</code>
+
+	<p>To use these, simply bind your custom functions to the target element:</p>
+<code>$('#target1').bind('beforeFadeOut', function(e, img){});
+<span class="comment">// function will receive event object and current image</span></code>
+
+	<p>If you are using the plugin in fullscreen mode, the target is document:</p>
+<code>$(document).bind('afterFadeIn'), function(e, img){});</code>
+
+	<h3>Dependencies</h3>
+	<p>
+		In addition to jQuery (tested with versions 1.4+), Slideshowify requires the fantastic
+		<a href="http://ricostacruz.com/jquery.transit/">jQuery Transit</a> plugin for CSS transformation and transition support. Kudos
+		to <a href="http://twitter.com/rstacruz">@rstacruz</a> for creating and distributing it.
+	</p>
+
+	<h3>Browser support</h3>
+	<p>
+		Slideshowify works on <b>every single browser I tested it on!</b> That's right - only those. 
+		But don't worry, that includes all browsers released in recent years, even IE6; perhaps 
+		even IE7. It also works and looks great on tablets and other mobile devices.
+	</p>
+	<p>
+		Obviously, browsers which support CSS3 transitions will produce better results. The plugin falls back
+		to plain old frame animation for others, and zoom transitions aren't supported in this case.
+	</p>
+
+	<h3>Download</h3>
+	<p>The latest stable version of the code can always be found on Github.</p>
+	<p>
+		<a href="https://raw.github.com/subchild/jquery.slideshowify.js/master/js/jquery.slideshowify.js">jquery.slideshowify.js</a> <span class="link-note">Development (8kb, uncompressed and commented code)</span><br>
+		<a href="https://raw.github.com/subchild/jquery.slideshowify.js/master/js/jquery.slideshowify.min.js">jquery.slideshowify.min.js</a> <span class="link-note">Production (4kb, conservatively minified)</span><br>
+	</p>
+	<p>For completeness, here's a link to the tested version of Rico's jQuery Transit:</p>
+	<p><a href="https://raw.github.com/subchild/jquery.slideshowify.js/master/js/jquery.transit.min.js">jquery.transit.min.js</a></p>
+
+	<h3>Usage</h3>
+	<p>
+		If you're reading this that means that the sections above were not entirely clear. 
+		Sorry about that. To use this thing, make sure your page includes the following 
+		scripts, then initialize as instructed previously:
+	</p>
+<code>&#060;script src="jquery.js">&#060;/script&#062;
+&#060;script src="jquery.transit.min.js"&#062;&#060;/script&#062;
+&#060;script src="jquery.slideshowify.js"&#062;&#060;/script&#062;
+</code>
+	<p>
+		Obviously, the paths to these files should be adjusted accordingly. Oh, and you really shouldn't 
+		include these files separately but instead bundle them (along with other scripts, if any). 
+		I made a thing that does that back in 2008. Its called <a href="http://www.subchild.com/2008/08/07/simple-javascript-and-css-file-bundler/">FileBundler</a> 
+		and should still work. It even supports CSS files as well.
+	</p>
+
+	<h3>Meet the Maker</h3>
+	<img id="maker-photo" src="http://gravatar.com/avatar/e2a29bdb30c3b1a3b69940e4e7339f1f?s=130"/>
+	<p>
+		Slideshowify was created by Alex Kolundzija (<a href="http://twitter.com/subchild">@subchild</a>) a 
+		web developer who has spent the last decade++ working on cool products at companies including Google, 
+		Meebo, MLB.com, TabletHotels and Razorfish.
+	</p>
+	<p>	
+		Like most humans, he owns a digital camera and often uses it. At some point, love of photography
+		combined with a deep interest in web development led him to create a photo hosting and management web service 
+		<a style="color: #f30" href="http://www.gallerama.com">Gallerama</a>, which has been around for a few years 
+		and which you should consider using. Not surprisingly, Slideshowify-powered slideshows are avaialble 
+		for all galleries hosted on Gallerama.
+	</p>
+	<p>
+		He rarely (but not never) writes on <a href="http://subchild.com/">his blog</a>, and is generally quick 
+		to respond to emails sent to a[at]ak.rs, an address he is very proud of.
+	</p>
+
+</div>
+<script type="text/javascript">
+$.slideshowify({
+	parentEl : '#target1',
+	dataUrl  : "http://www.gallerama.com/services/gallery/get.php?gid=2925&versions[]=9",
+	dataType : "jsonp",
+	filterFn : function(imgs){
+		var fixedImgs = [];
+		$.each(imgs, function(i, img){ fixedImgs.push($.extend(img.versions["9"], {id:img.id})); });
+		return fixedImgs;
+	},
+	randomize    : true,
+	aniSpeedMin  : 10000,
+	aniSpeedMax  : 13000
+});
+</script>
+
+<a href="https://github.com/subchild"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-443787-5");
+	pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
+
