@@ -154,6 +154,10 @@ input, select, textarea {
 		font-weight: 100;
 	}
 
+	h1 span:nth-child(even) {
+		color:gray;
+	}
+
 	h2 {
 		font-family: "nagel-variable", sans-serif;
 		font-variation-settings: "slnt" 0, "wght" 600;
