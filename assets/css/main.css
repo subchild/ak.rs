@@ -173,6 +173,11 @@ input, select, textarea {
 		line-height: 1.5em;
 	}
 
+	#sound h4 {
+		text-transform: uppercase;
+		font-size: 0.7em;	
+	}
+
 	h5 {
 		font-size: 0.9em;
 		line-height: 1.5em;
@@ -303,6 +308,31 @@ input, select, textarea {
 		height: 100%;
 		border: 0;
 	}
+
+	.video-container {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+	}
+	
+	.yt-video2 {
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+		height: 0;
+		overflow: hidden;
+		width: 45vw; /* Adjust this to control the width of each video */
+		max-width: 100%;
+	}
+	
+	.yt-video2 iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
 
 /* Container */
 
