@@ -1,7 +1,6 @@
 @import url("fontawesome-all.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic");
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rokkitt:ital,wght@0,800;1,600');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Rokkitt:ital,wght@0,800;1,600');
+@import url("https://use.typekit.net/egt8hou.css");
 
 /*
 	Strata by HTML5 UP
@@ -156,7 +155,8 @@ input, select, textarea {
 	}
 
 	h2 {
-		font-family: "Rokkitt";
+		font-family: "nagel-variable", sans-serif;
+		font-variation-settings: "slnt" 0, "wght" 600;
 		font-size: 2.6em;
 		margin-bottom: 0.5em;
 		text-transform: none;
@@ -2762,6 +2762,12 @@ input, select, textarea {
 				margin-top: 0;
 				padding-top: 0;
 			}
+
+		#main section h1 {
+			font-family: "nagel-variable", sans-serif;
+			font-variation-settings: "slnt" 0, "wght" 400;
+			font-size: 3em;
+		}
 
 		#main > section h2 {
 			font-weight: 1000;
