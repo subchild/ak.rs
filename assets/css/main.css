@@ -248,6 +248,62 @@ input, select, textarea {
 		text-align: right;
 	}
 
+	.secondary-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.secondary-links li {
+		display: block;
+		margin-bottom: 0.5em;
+	}
+
+	.secondary-links li a {
+		border: none;
+	}
+
+	.secondary-links li a::before {
+		content: "";
+		display: inline-block;
+		width: 1em; 
+		height: 1em; 
+		margin-right: 0.4em; 
+		background-size: contain;
+		background-repeat: no-repeat;
+		vertical-align: -0.1em; 
+	}
+
+	.link-dribbble::before {
+		background-image: url("../../images/logo-dribbble.svg");
+	}
+
+	.link-github::before {
+		background-image: url("../../images/logo-github.svg");
+	}
+
+	.link-touchdesigner::before {
+		background-image: url("../../images/logo-touchdesigner.svg");
+	}
+
+
+	div.yt-video {
+		position: relative;
+		padding-bottom: 56.25%;
+		height: 0;
+		overflow: hidden;
+		max-width: 100%;
+	}
+	
+	.yt-video iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
 /* Container */
 
 	.container {
@@ -2451,7 +2507,7 @@ input, select, textarea {
 		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		background-color: transparent;
-		border-radius: 0.35em;
+		border-radius: 0.5em;
 		border: solid 3px #efefef;
 		color: #787878 !important;
 		cursor: pointer;
