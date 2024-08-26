@@ -2216,6 +2216,10 @@ input, select, textarea {
 			max-width: 30%;
 		}
 
+		#guitar .image.right {
+			max-width: 40%;
+		}
+		
 			.image.left img, .image.right img {
 				width: 100%;
 			}
