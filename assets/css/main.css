@@ -1744,7 +1744,7 @@ input, select, textarea {
 				}
 
 				.row > .col-12-xsmall {
-					width: 100%;
+					width: 50%;
 				}
 
 				.row > .off-12-xsmall {
@@ -2787,8 +2787,8 @@ input, select, textarea {
 
 		#main > section {
 			border-top: solid 2px #efefef;
-			margin: 3em 0 0 0;
-			padding: 3em 0 0 0;
+			margin: 6em 0 0 0;
+			padding: 4em 0 0 0;
 		}
 
 			#main > section:first-child {
@@ -3234,9 +3234,11 @@ input, select, textarea {
 
 		/* Basic */
 
-			h1 {
-				font-size: 1.5em;
+			#main section h1 {
+				font-size: 2em;
 			}
+
+			
 
 			h2 {
 				font-size: 2em;
