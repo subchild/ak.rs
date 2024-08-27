@@ -2734,7 +2734,7 @@ input, select, textarea {
 			margin: 0 0 2em 0;
 		}
 
-		#header strong, #header b {
+		#header strong {
 			color: #ffffff;
 			font-family: "nagel-variable";
 		}
@@ -2819,7 +2819,7 @@ input, select, textarea {
 
 		#main section h1 {
 			font-family: "nagel-variable", sans-serif;
-			font-variation-settings: "slnt" 0, "wght" 400;
+			font-variation-settings: "wght" 400;
 			font-size: 3em;
 			line-height: 1.4em;
 		}
