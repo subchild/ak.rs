@@ -295,7 +295,6 @@ input, select, textarea {
 		background-image: url("../../images/logo-touchdesigner.svg");
 	}
 
-
 	div.yt-video {
 		position: relative;
 		padding-bottom: 56.25%;
@@ -1873,6 +1872,10 @@ input, select, textarea {
 		line-height: 1.5em;
 	}
 
+	header.major h2 {
+		font-size: 2em;
+	}
+
 	header h3 + p {
 		font-size: 1.1em;
 		margin-top: -0.8em;
@@ -1887,9 +1890,16 @@ input, select, textarea {
 		line-height: 1.5em;
 	}
 
-	header.major h2 {
-		font-size: 2em;
+	#main #intro p {
+		font-size: 1.25em;
+		font-weight: 200;
 	}
+	
+	#main #intro p strong {
+		font-family: 'nagel-variable';
+		font-variation-settings: "slnt" 0, "wght" 450;
+		color: #000;
+	};
 
 /* Form */
 
@@ -2726,6 +2736,7 @@ input, select, textarea {
 
 		#header strong, #header b {
 			color: #ffffff;
+			font-family: "nagel-variable";
 		}
 
 		#header h2, #header h3, #header h4, #header h5, #header h6 {
@@ -2742,6 +2753,11 @@ input, select, textarea {
 		#header .image.avatar {
 			margin: 0 0 1em 0;
 			width: 6.25em;
+		}
+
+		#header .inner h1 {
+			font-size: 1.3em;
+			line-height: 1.25em;
 		}
 
 /* Footer */
@@ -2805,15 +2821,16 @@ input, select, textarea {
 			font-family: "nagel-variable", sans-serif;
 			font-variation-settings: "slnt" 0, "wght" 400;
 			font-size: 3em;
+			line-height: 1.4em;
 		}
 
 		#main > section h2 {
 			font-weight: 1000;
-			};
+		};
 
 		#main > section > header > h2 { 
 			font-weight: 200;
-			};
+		};
 
 
 /* Poptrox */
