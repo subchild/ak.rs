@@ -2819,8 +2819,7 @@ input, select, textarea {
 
 		#main section h1 {
 			font-family: "nagel-variable", sans-serif;
-			font-variation-settings: "slnt" 0, "wght" 400;
-			font-variation-settings: "ital" 0, "wght" 400;
+			font-variation-settings: 'wght' 400, 'slnt' 0;
 			font-size: 3em;
 			line-height: 1.4em;
 		}
