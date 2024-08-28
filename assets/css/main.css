@@ -2823,6 +2823,7 @@ input, select, textarea {
 			font-variation-settings: 'wght' 400, 'slnt' 0;
 			font-size: 3em;
 			line-height: 1.4em;
+			color: black;
 		}
 
 		#main > section h2 {
