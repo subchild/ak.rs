@@ -166,6 +166,26 @@ input, select, textarea {
 		text-transform: none;
 	}
 
+	#work h2, #personal-projects h2 {
+		font-size: 3em;
+	}
+
+	#work li {
+		font-family: "nagel-variable", sans-serif;
+		font-size: 1.25em;
+	}
+
+	#personal-projects h2:before {
+		content: url(../../images/akrs-logo-black.svg);
+		height: 1.2em;
+		width: 1.3em;
+		vertical-align: middle;
+	}
+
+	h2.icon:before {
+		padding-right: 0.3em;
+	}
+
 	h3 {
 		font-size: 1.25em;
 		line-height: 1.5em;
@@ -184,9 +204,14 @@ input, select, textarea {
 		line-height: 1.5em;
 	}
 
+	section#sound {
+		padding-top: 0;
+	}
+
 	#sound h4 {
 		text-transform: uppercase;
-		font-size: 0.7em;	
+		font-size: 0.8em;
+		font-family: 'nagel-variable';	
 	}
 
 	h5 {
@@ -2818,8 +2843,8 @@ input, select, textarea {
 	}
 
 		#main > section {
-			margin: 5em 0 0 0;
-			padding: 5em 0 0 0;
+			margin: 4em 0 0 0;
+			padding: 4em 0 0 0;
 		}
 
 			#main > section:first-child {
