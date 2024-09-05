@@ -111,9 +111,9 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		border-bottom: dotted 1px;
 		color: #4995bf;
 		text-decoration: none;
+		font-weight: 500;
 	}
 
 		a:hover {
@@ -172,6 +172,7 @@ input, select, textarea {
 
 	#work li {
 		font-family: "nagel-variable", sans-serif;
+		font-variation-settings: "slnt" 0, "wght" 200;
 		font-size: 1.25em;
 	}
 
