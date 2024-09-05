@@ -155,13 +155,13 @@ input, select, textarea {
 	}
 
 	h1 span:nth-child(even) {
-		color:gray;
+		color:#a7a7a7;
 	}
 
 	h2 {
 		font-family: "nagel-variable", sans-serif;
 		font-variation-settings: "slnt" 0, "wght" 600;
-		font-size: 2.6em;
+		font-size: 2.1em;
 		margin-bottom: 0.5em;
 		text-transform: none;
 	}
@@ -175,12 +175,18 @@ input, select, textarea {
 		font-size: 1.25em;
 	}
 
-	#personal-projects h2:before {
-		content: url(../../images/akrs-logo-black.svg);
-		height: 1.2em;
-		width: 1.3em;
-		vertical-align: middle;
+	#work h2:before {
+		color: #a7a7a7;
 	}
+
+	#personal-projects h2 svg {
+		color: #a7a7a7;
+		height: 1em;
+		vertical-align: baseline;
+		position: relative;
+		bottom: -0.1em;
+	}
+
 
 	h2.icon:before {
 		padding-right: 0.3em;
