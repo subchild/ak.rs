@@ -195,10 +195,9 @@ input, select, textarea {
 	}
 
 	h3 {
-		font-size: 1.25em;
-		line-height: 1.5em;
-		text-transform: uppercase;
-		margin: 3em 0 1em 0;
+		font-size: 2em;
+    	margin: 2em 0 0.5em 0;
+    	font-family: "longhand-lp";
 	}
 
 	h3 span {
@@ -378,9 +377,6 @@ input, select, textarea {
 		border: 0;
 	}
 
-	#sound h3 {
-		margin: 0 0 1em 0;
-	}
 
 
 /* Container */
@@ -1942,8 +1938,8 @@ input, select, textarea {
 	}
 	
 	#main #intro p strong {
-		font-family: 'nagel-variable';
-		font-variation-settings: "slnt" 0, "wght" 450;
+		font-family: 'longhand-lp';
+		font-size: 2em;
 		color: #000;
 	};
 
@@ -3385,8 +3381,8 @@ input, select, textarea {
 			}
 
 				#main > section {
-					margin: 2.25em 0 0 0;
-					padding: 2.25em 0 0 0;
+					margin: 3em 0 0 0;
+					padding: 3em 0 0 0;
 				}
 
 		/* Poptrox */
