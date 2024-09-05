@@ -177,15 +177,16 @@ input, select, textarea {
 	}
 
 	#work h2:before {
-		color: #a7a7a7;
+		color: #0966c2;
 	}
 
 	#personal-projects h2 svg {
-		color: #a7a7a7;
+		color: #63082d;
 		height: 1em;
 		vertical-align: baseline;
 		position: relative;
 		bottom: -0.1em;
+		padding-right: 0.3em;
 	}
 
 
@@ -211,7 +212,7 @@ input, select, textarea {
 		line-height: 1.5em;
 	}
 
-	section#sound {
+	#main > section#sound {
 		padding-top: 0;
 	}
 
@@ -2675,6 +2676,33 @@ input, select, textarea {
 			background-color: #4995bf;
 			color: #ffffff !important;
 		}
+
+		.button.primary {
+			background-image: linear-gradient(138deg, #0a66c2 10%, #18426c 50%, #0a66c2 90%);
+			border-radius: 1.5rem;
+			border-style: none;
+			box-sizing: border-box;
+			cursor: pointer;
+			flex-shrink: 0;
+			padding: 0.3rem 3rem;
+			text-align: center;
+			text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+			transition: all .5s;
+			user-select: none;
+			-webkit-user-select: none;
+			touch-action: manipulation;
+		}
+
+		.button.primary:hover {
+			box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+			transition-duration: .5s;
+		}
+
+@media (min-width: 768px) {
+  .button-36 {
+    padding: 0 2.6rem;
+  }
+}
 
 			input[type="submit"].primary:hover,
 			input[type="reset"].primary:hover,
