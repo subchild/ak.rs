@@ -177,11 +177,11 @@ input, select, textarea {
 	}
 
 	#work h2:before {
-		color: #0966c2;
+		color: #8199b2;
 	}
 
 	#personal-projects h2 svg {
-		color: #63082d;
+		color: #a08a8a;
 		height: 1em;
 		vertical-align: baseline;
 		position: relative;
@@ -2676,7 +2676,7 @@ input, select, textarea {
 		}
 
 		.button.primary {
-			background-image: linear-gradient(138deg, #0a66c2 10%, #18426c 50%, #0a66c2 90%);
+			background-image: linear-gradient(138deg, #5c5c5c 10%, #102439 50%, #1e1e1e 90%);
 			border-radius: 1.5rem;
 			border-style: none;
 			box-sizing: border-box;
@@ -2692,7 +2692,7 @@ input, select, textarea {
 		}
 
 		.button.primary:hover {
-			box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+			box-shadow: rgba(63, 87, 205, 0.5) 0 1px 30px;
 			transition-duration: .5s;
 		}
 
@@ -3335,7 +3335,7 @@ input, select, textarea {
 			}
 
 			h3 {
-				font-size: 1em;
+				font-size: 1.75em;
 			}
 
 		/* Section/Article */
