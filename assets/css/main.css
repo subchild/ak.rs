@@ -228,7 +228,7 @@ input, select, textarea {
 
 	#sound h4 {
 		text-transform: uppercase;
-		font-size: 0.8em;
+		font-size: 0.7em;
 		font-family: 'nagel-variable';
 		font-variation-settings: "slnt" 0, "wght" 450;
 		margin-bottom: 0.1em;	
@@ -388,7 +388,8 @@ input, select, textarea {
 		border: 0;
 	}
 
-	#main > section > p {
+	#main > section > p,
+	#main > section > .row > p {
 		font-size: 1.16em;
 		line-height: 1.83em;
 	}
