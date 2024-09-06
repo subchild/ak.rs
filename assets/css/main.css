@@ -389,8 +389,8 @@ input, select, textarea {
 	}
 
 	#main > section > p {
-		font-size: 14pt;
-		line-height: 22pt;
+		font-size: 1.16em;
+		line-height: 1.83em;
 	}
 
 
@@ -2295,6 +2295,10 @@ input, select, textarea {
 
 		#guitar .image.right {
 			max-width: 40%;
+		}
+		
+		#guitar .image.left {
+			max-width: 20%;
 		}
 		
 			.image.left img, .image.right img {
