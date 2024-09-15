@@ -309,6 +309,43 @@ input, select, textarea {
 		text-align: right;
 	}
 
+	.nav {
+		margin-top: 4em;
+	}
+
+	.nav ul li {
+		list-style-type: none;
+	}
+
+	.nav li a {
+		color: white;
+		font-family: "nagel-variable";
+		font-variation-settings: 'wght' 400, 'slnt' 0;
+		padding: 0.3em 0.3em 0.1em 0.3em;
+	}
+
+	.nav ul li a:hover {
+		color: white !important;
+		background-color: rgb(48, 48, 48);
+	}
+
+	.nav ul.top {
+		margin-bottom: 0;
+	}
+
+	.nav ul.top li {
+		margin-bottom: 0.5em;
+	}
+
+	.nav ul.top li a {
+		font-variation-settings: 'wght' 1000, 'slnt' 0;
+		text-transform: uppercase;
+	}
+
+	.nav ul.sub li a {
+		font-size: 90%;
+	}
+
 	.secondary-links {
 		list-style: none;
 		padding: 0;
@@ -1179,6 +1216,10 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 980px) {
+
+			.nav {
+				display: none;
+			}
 
 			.row {
 				display: flex;
