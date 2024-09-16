@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-	Strata by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!-- This page started off as HTP5 UP's Strata template created by @ajlkn and has been heavily modified. -->
 <html>
 	<head>
 		<title>Alex Kolundzija - Portfolio</title>
@@ -370,9 +366,10 @@
 
 				<!-- Closing -->
 				<section id="closing">
+					<h3>See you around</h3>
 					<p>
 						Originally from Belgrade (former Yugoslavia, now Serbia) I've spent most of my life in New York City, 
-						and reside in Brooklyn with my wife and two kids. Say hello if you see me around, at a local music show,
+						and live in Brooklyn with my wife and our two kids. Say hello if you spot me at a local music show,
 						a Knicks game at the Garden, or at a coffee shop in the neighborhood.
 					</p>
 				</section>
@@ -747,7 +744,7 @@ print 'it took ' + i + ' iterations to sort the deck.';</code></pre>
 					</ul>
 				</div>
 				<ul class="copyright">
-					<li>This site is based on an <a href="http://html5up.net" target="_blank">HTML5 UP</a> template.</li>
+					<li>Forked from <a href="http://html5up.net" target="_blank">HTML5 UP</a> and hosted on Github.</li>
 				</ul>
 			</footer>
 
@@ -762,47 +759,36 @@ print 'it took ' + i + ' iterations to sort the deck.';</code></pre>
 	</body>
 	<script>
 
-// Easing function (easeInOutCubic)
-function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-}
+		function easeInOutCubic(t) {
+			return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+		}
 
-function scrollToElement(target, duration) {
-    const start = window.pageYOffset;
-    const end = target.getBoundingClientRect().top;
-    const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+		function scrollToElement(target, duration) {
+			const start = window.pageYOffset;
+			const end = target.getBoundingClientRect().top;
+			const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
 
-    function animateScroll(currentTime) {
-        const timeElapsed = currentTime - startTime;
-        const progress = Math.min(timeElapsed / duration, 1);  // Progress value from 0 to 1
+			function animateScroll(currentTime) {
+				const timeElapsed = currentTime - startTime;
+				const progress = Math.min(timeElapsed / duration, 1);  // Progress value from 0 to 1
+				const ease = easeInOutCubic(progress);
 
-        // Apply easing function
-        const ease = easeInOutCubic(progress);
+				window.scrollTo(0, start + end * ease);
 
-        window.scrollTo(0, start + end * ease);
-
-        if (timeElapsed < duration) {
-            requestAnimationFrame(animateScroll);
-        }
-    }
-
-    requestAnimationFrame(animateScroll);
-}
+				if (timeElapsed < duration) {
+					requestAnimationFrame(animateScroll);
+				}
+			}
+			
+			requestAnimationFrame(animateScroll);
+		}
 
 		document.querySelectorAll('.nav a').forEach(anchor => {
 			anchor.addEventListener('click', function (e) {
 				e.preventDefault();
-
 				const target = document.querySelector(this.getAttribute('href'));
-				
 				scrollToElement(target, 1000);  // Duration: 1000ms (1 second)
-
-				/*
-				target.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start'
-				});
-				*/
+				// target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			});
 		});
 	</script>
