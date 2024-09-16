@@ -219,7 +219,7 @@ input, select, textarea {
 	}
 
 	#main > section#sound {
-		padding-top: 0;
+		margin-top: 0;
 	}
 
 	#sound h3 {
