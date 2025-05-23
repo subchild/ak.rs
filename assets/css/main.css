@@ -1,5 +1,5 @@
 @import url("fontawesome-all.min.css");
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Rokkitt:ital,wght@0,800;1,600');
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&Archivo:ital,wght@0,100..900;1,100..900&family=Rokkitt:ital,wght@0,800;1,600');
 @import url("https://use.typekit.net/egt8hou.css");
 
 /*
@@ -2001,16 +2001,9 @@ input, select, textarea {
 	}
 	
 	#main #intro p strong {
-		font-family: 'longhand-lp';
-		font-size: 2em;
-		color: #000;
-		letter-spacing: -0.1em;
-		word-spacing: 0.2em;
-	}
-
-	#main #intro p strong:after {
-		content: '.';
-		padding-left: 3px;
+		font-family: 'Rock Salt';
+		font-size: 1.1em;
+		color: #303030;
 	}
 
 
