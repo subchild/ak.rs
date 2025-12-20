@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>preview.fm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mrs+Sheppards&family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3B1X1DJFR6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-3B1X1DJFR6");
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fff;
+        --ink: #000;
+        --panel: #f4f4f4;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Mrs Sheppards", "Comic Sans MS", cursive;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 48px 24px 64px;
+      }
+
+      .stack {
+        width: min(1200px, 100%);
+        display: grid;
+        gap: 24px;
+        text-align: center;
+      }
+
+      .page-title {
+        font-size: clamp(2.6rem, 6vw, 4rem);
+        margin: 0;
+      }
+
+      .page-subtitle {
+        margin: 10px 0 0;
+        font-size: 1.1rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.02em;
+        opacity: 0.7;
+      }
+
+      .toggle {
+        display: inline-flex;
+        margin-top: 18px;
+        border: 2px solid #000;
+        border-radius: 999px;
+        overflow: hidden;
+        background: #fff;
+        width: min(720px, 100%);
+      }
+
+      .toggle button {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px 30px;
+        font-size: 0.95rem;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        cursor: pointer;
+      }
+
+      .toggle button.is-active {
+        background: #000;
+        color: #fff;
+      }
+
+      .search {
+        display: grid;
+        gap: 8px;
+        text-align: center;
+        align-items: center;
+        width: min(720px, 100%);
+        margin: 32px auto 0;
+        padding: 8px 14px;
+        background: #f8f6f1;
+        border-radius: 18px;
+      }
+
+      .search input {
+        width: 100%;
+        padding: 8px 10px;
+        border: none;
+        font-size: 1rem;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow-x: auto;
+        background: transparent;
+      }
+
+      .search-field {
+        position: relative;
+      }
+
+      .clear-search {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        font-size: 1.1rem;
+        cursor: pointer;
+        opacity: 0.7;
+      }
+
+      .clear-search[hidden] {
+        display: none;
+      }
+
+      .search .error {
+        min-height: 1.2em;
+        font-size: 0.9rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #c43b2f;
+      }
+
+      .search .error:empty {
+        display: none;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .card {
+        padding: 20px;
+        border: 2px solid #000;
+        background: var(--panel);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      }
+
+      .card.is-playing {
+        background: #f3ffe6;
+      }
+
+      .title {
+        font-size: 0.96rem;
+        margin: 0 0 10px;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+      }
+
+      .artwork {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border: 2px solid #000;
+        background: #fff;
+        margin: 0 0 10px;
+      }
+
+      .bio {
+        margin: 0 0 10px;
+        font-size: 0.85rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.35;
+        opacity: 0.75;
+      }
+
+      .subtitle {
+        margin: 0 0 6px;
+        font-size: 1.5rem;
+        font-family: "Bebas Neue", system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.01em;
+      }
+
+      .album-link {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        color: #000;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+      }
+
+      .link-divider {
+        margin: 0 8px;
+        font-size: 0.9rem;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+      }
+
+      .album-link[hidden] {
+        display: none;
+      }
+
+      .status {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 0.85rem;
+        opacity: 0.7;
+        min-height: 1.2em;
+      }
+
+      .unlock {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(4px);
+        z-index: 10;
+      }
+
+      .unlock button {
+        border: 2px solid #000;
+        background: #fff;
+        padding: 12px 18px;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .unlock button .desktop-label {
+        display: inline;
+      }
+
+      .unlock button .mobile-label {
+        display: none;
+      }
+
+      @media (hover: none) and (pointer: coarse) {
+        .unlock button .desktop-label {
+          display: none;
+        }
+
+        .unlock button .mobile-label {
+          display: inline;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="stack">
+        <div>
+          <h1 class="page-title">preview.fm</h1>
+          <p class="page-subtitle">Preview cuts from these excellent 2025 releases</p>
+          <div class="toggle" role="tablist" aria-label="Release type">
+            <button class="is-active" type="button" data-category="Albums" aria-pressed="true">
+              Albums
+            </button>
+            <button type="button" data-category="EPs" aria-pressed="false">EPs</button>
+            <button type="button" data-category="Singles & Songs" aria-pressed="false">
+              Singles &amp; Songs
+            </button>
+          </div>
+        </div>
+        <div class="grid" id="preview-grid"></div>
+        <form class="search" id="search-form">
+          <div class="search-field">
+            <input
+              id="search-input"
+              type="search"
+              placeholder="enter your artist and song name to add a preview"
+              autocomplete="off"
+            />
+            <button type="button" class="clear-search" id="clear-search" hidden>
+              ×
+            </button>
+          </div>
+          <div class="error" id="search-error"></div>
+        </form>
+      </section>
+    </main>
+
+    <div class="unlock" id="unlock">
+      <button type="button" id="unlock-button">
+        <span class="desktop-label">Hover to listen. Speakers on.</span>
+        <span class="mobile-label">Long-press to listen. Volume up.</span>
+      </button>
+    </div>
+
+    <script>
+      let audioUnlocked = false;
+      const unlock = document.getElementById("unlock");
+      const unlockButton = document.getElementById("unlock-button");
+
+      const unlockAudio = () => {
+        audioUnlocked = true;
+        unlock.remove();
+      };
+
+      unlockButton.addEventListener("click", unlockAudio, { once: true });
+      document.addEventListener("pointerdown", unlockAudio, { once: true });
+
+      const tracksByCategory = {
+        Albums: [
+          {
+            artist: "Sam Akpro",
+            title: "I Can See the Sun",
+            bio: "London-based artist blending post-punk edges with intimate songwriting, threading moody guitars and soft vocals through spare, cinematic grooves.",
+          },
+          {
+            artist: "Gogo Penguin",
+            title: "What We Are and What We Are Meant to Be",
+            bio: "Manchester trio fusing contemporary jazz with electronic pulse, crafting propulsive piano-led pieces that feel cinematic and club-ready.",
+          },
+          {
+            artist: "Oscar Jerome",
+            title: "Easier",
+            album: "The Fork",
+            bio: "London singer-guitarist mixing jazz harmony, warm soul phrasing, and breezy guitar lines into fluid, rhythm-forward songs.",
+          },
+          {
+            artist: "Bon Iver",
+            title: "Things Behind Things Behind Things",
+            bio: "Project led by Justin Vernon, known for layered harmonies, experimental production, and emotional songwriting that blurs indie folk, electronic, and ambient forms.",
+          },
+          {
+            artist: "Weval",
+            title: "Head First",
+            bio: "Dutch duo blending lush synths, broken-beat rhythms, and hazy vocals into textured electronic tracks that drift between club energy and dreamlike calm.",
+          },
+          {
+            artist: "Reid Willis",
+            title: "Diamong Spitter",
+            bio: "Producer and songwriter crafting crisp, melodic electronic pop with shimmering synth layers, elastic bass, and clean modern hooks.",
+          },
+          {
+            artist: "Maribou State",
+            title: "Otherside",
+            bio: "UK duo pairing organic instrumentation with downtempo electronics, building warm, soulful tracks that feel both intimate and expansive.",
+          },
+          {
+            artist: "Okgiorgio",
+            title: "ko tempo",
+            bio: "Italian producer making sleek, club-ready tracks with glossy synth work, hypnotic grooves, and subtle melodic shifts.",
+          },
+          {
+            artist: "Rival Consoles",
+            title: "2 Forms",
+            bio: "British composer crafting immersive, analog-leaning electronic music, rich with evolving textures, pulsing rhythms, and cinematic atmosphere.",
+          },
+        ],
+        EPs: [
+          {
+            artist: "Farhot",
+            title: "Ya Saghira",
+            bio: "Berlin-based producer blending melodic percussion with cinematic electronics, often weaving Middle Eastern motifs into modern club textures.",
+          },
+          {
+            artist: "Max Cooper & Rob Clouth",
+            title: "Candeleda",
+            bio: "A collaboration pairing Max Cooper’s meticulous electronic storytelling with Rob Clouth’s emotive sound design and rich textures.",
+          },
+          {
+            artist: "Temudo",
+            title: "Meteora",
+            bio: "Portuguese techno artist focused on raw, driving club cuts with industrial grit, heavy low-end, and hypnotic momentum.",
+          },
+          {
+            artist: "ASEC",
+            title: "Nighthawks",
+            bio: "Producer crafting dark, driving techno with moody atmospheres, tight percussion, and a restless, forward push.",
+          },
+          {
+            artist: "Echo Map, Azaleh",
+            title: "Unknown Depths",
+            bio: "Duo fusing atmospheric synth work with deep, rolling techno rhythms for spacious, late-night energy.",
+          },
+          {
+            artist: "Rob Clouth",
+            title: "Did You Follow?",
+            bio: "UK producer known for intricate sound design, blending melodic warmth with experimental electronic detail and emotive phrasing.",
+          },
+          {
+            artist: "Disaffected",
+            title: "Be Forthcoming",
+            clipStart: 20,
+            bio: "Electronic project leaning into tense, driving rhythms with moody textures and a darker, industrial edge.",
+          },
+          {
+            artist: "Kangding Ray",
+            title: "Superfluid",
+            bio: "French producer crafting cinematic techno, balancing deep tension, sculpted bass, and refined sonic architecture.",
+          },
+          {
+            artist: "PS11",
+            title: "Intervals",
+            bio: "Electronic artist exploring spacious, rhythmic compositions that sit between ambient drift and club propulsion.",
+          },
+        ],
+        "Singles & Songs": [
+          {
+            artist: "Client_03, Lorn",
+            title: "The Last Human",
+            bio: "Brooding collaboration combining cinematic synth work, heavy low-end, and stark, emotional sound design.",
+          },
+          {
+            artist: "Koan Sound",
+            title: "Spirals Unfold",
+            bio: "UK duo celebrated for hyper-detailed bass music, intricate arrangement, and glossy, future-facing sound design.",
+          },
+          {
+            artist: "Benyayer",
+            title: "The Return",
+            bio: "Electronic producer shaping sleek, modern tracks with bright synths and focused dancefloor energy.",
+          },
+          {
+            artist: "VIER, Machinedrum, Thys, Holly",
+            title: "SOLITU",
+            clipStart: 20,
+            bio: "All-star collaboration blending bass music innovators into a futuristic, rhythm-forward sonic palette.",
+          },
+          {
+            artist: "Unprocessed",
+            title: "Snowlover",
+            appleId: "1827910988",
+            bio: "German progressive metal trio known for virtuosic guitar work, intricate rhythms, and melodic, emotionally charged songwriting.",
+          },
+          {
+            artist: "Calyx",
+            title: "Forever",
+            clipStart: 20,
+            bio: "Veteran drum & bass producer known for weighty basslines, sharp breakbeats, and polished energy.",
+          },
+          {
+            artist: "Envy",
+            title: "Damaio",
+            clipStart: 20,
+            bio: "Electronic producer crafting moody, atmospheric tracks with crisp drums and sleek, modern synth textures.",
+          },
+          {
+            artist: "AKRS",
+            title: "Pronk",
+            clipStart: 20,
+            bio: "Producer crafting crisp, rhythmic electronic cuts with punchy drums and clean, melodic hooks.",
+          },
+          {
+            artist: "IMANU",
+            title: "Falling apart",
+            bio: "Dutch producer blending cinematic sound design with heavy bass textures and emotional, futuristic atmospheres.",
+          },
+          {
+            artist: "Mont Duamel",
+            title: "Invisible Lens",
+            bio: "Producer building melodic electronic tracks with warm pads, textured percussion, and a late-night glow.",
+          },
+          {
+            artist: "AUR3LIAN, Milo Merah",
+            title: "Falling",
+            bio: "Collaboration pairing airy vocals with shimmering synths and a soft, atmospheric electronic foundation.",
+          },
+          {
+            artist: "Nikita, the Wicked",
+            title: "Holy Ghost",
+            bio: "Dark, cinematic electronic artist combining ominous harmonies, pulsing bass, and dramatic soundscapes.",
+          },
+          {
+            artist: "Verses GT",
+            title: "Unknown",
+            bio: "Electronic producer crafting textured, rhythm-forward tracks with a balance of grit, atmosphere, and melodic tension.",
+          },
+          {
+            artist: "Marino Canal",
+            title: "The Bells",
+            appleId: "1844447412",
+            bio: "Spanish producer known for hypnotic techno grooves, patient builds, and richly detailed sound design.",
+          },
+          {
+            artist: "DJ Ride",
+            title: "Rise Above",
+            clipStart: 20,
+            bio: "Turntablist and producer blending heavy bass, sharp cuts, and futuristic textures into high-energy electronic tracks.",
+          },
+        ],
+      };
+
+      const defaultClipStart = 10;
+      const clipDuration = 10;
+
+      const grid = document.getElementById("preview-grid");
+      const toggleButtons = document.querySelectorAll(".toggle button");
+      const searchForm = document.getElementById("search-form");
+      const searchInput = document.getElementById("search-input");
+      const searchError = document.getElementById("search-error");
+      const clearSearch = document.getElementById("clear-search");
+
+      const makeCard = (track, options = {}) => {
+        const { match } = options;
+        const card = document.createElement("article");
+        card.className = "card";
+        card.setAttribute("role", "button");
+        card.setAttribute(
+          "aria-label",
+          `Preview ${track.title} by ${track.artist}`
+        );
+
+        const title = document.createElement("h2");
+        title.className = "title";
+        title.textContent = track.title;
+
+        const subtitle = document.createElement("p");
+        subtitle.className = "subtitle";
+        subtitle.textContent = track.artist;
+
+        const artwork = document.createElement("img");
+        artwork.className = "artwork";
+        artwork.alt = `${track.title} album artwork`;
+
+        const bio = document.createElement("p");
+        bio.className = "bio";
+        bio.textContent = track.bio || "";
+
+        const audio = document.createElement("audio");
+        audio.preload = "metadata";
+
+        const albumLink = document.createElement("a");
+        albumLink.className = "album-link";
+        albumLink.textContent = "Open album";
+        albumLink.target = "_blank";
+        albumLink.rel = "noopener";
+        albumLink.hidden = true;
+        albumLink.addEventListener("click", () => {
+          gtag("event", "click_album", {
+            event_category: "outbound",
+            track_title: track.title,
+            track_artist: track.artist,
+          });
+          stopPreview("album_click");
+        });
+
+        const spotifyLink = document.createElement("a");
+        spotifyLink.className = "album-link";
+        spotifyLink.textContent = "Find on Spotify";
+        spotifyLink.target = "_blank";
+        spotifyLink.rel = "noopener";
+        spotifyLink.hidden = true;
+        spotifyLink.addEventListener("click", () => {
+          gtag("event", "click_spotify", {
+            event_category: "outbound",
+            track_title: track.title,
+            track_artist: track.artist,
+          });
+          stopPreview("spotify_click");
+        });
+
+        const linkDivider = document.createElement("span");
+        linkDivider.className = "link-divider";
+        linkDivider.textContent = "|";
+        linkDivider.hidden = true;
+
+        card.append(
+          artwork,
+          subtitle,
+          bio,
+          title,
+          albumLink,
+          linkDivider,
+          spotifyLink,
+          audio
+        );
+        grid.append(card);
+
+        const query = `${track.title} ${track.artist}${
+          track.album ? ` ${track.album}` : ""
+        }`;
+        const apiUrl = track.appleId
+          ? `https://itunes.apple.com/lookup?id=${encodeURIComponent(
+              track.appleId
+            )}&entity=song`
+          : `https://itunes.apple.com/search?term=${encodeURIComponent(
+              query
+            )}&media=music&entity=song&limit=1`;
+
+        let previewReady = false;
+        let hoverActive = false;
+        let hoverStart = null;
+
+        const clipStart = track.clipStart ?? defaultClipStart;
+        const clipEnd = clipStart + clipDuration;
+
+        const trackHoverEnd = (reason) => {
+          if (!hoverStart) {
+            return;
+          }
+          const durationSeconds = (performance.now() - hoverStart) / 1000;
+          hoverStart = null;
+          gtag("event", "hover_preview", {
+            event_category: "engagement",
+            event_label: reason,
+            track_title: track.title,
+            track_artist: track.artist,
+            hover_seconds: Math.round(durationSeconds * 10) / 10,
+          });
+        };
+
+        const stopPreview = (reason = "stop") => {
+          audio.pause();
+          audio.currentTime = clipStart;
+          card.classList.remove("is-playing");
+          trackHoverEnd(reason);
+        };
+
+        audio.addEventListener("timeupdate", () => {
+          if (hoverActive && audio.currentTime >= clipEnd) {
+            hoverActive = false;
+            stopPreview("clip_end");
+          }
+        });
+
+        const applyMatch = (resolved) => {
+          if (!resolved || !resolved.previewUrl) {
+            return;
+          }
+          if (resolved.artworkUrl100) {
+            artwork.src = resolved.artworkUrl100.replace("100x100", "300x300");
+          } else {
+            artwork.alt = "Album artwork unavailable";
+          }
+          if (resolved.collectionViewUrl) {
+            albumLink.href = resolved.collectionViewUrl;
+            albumLink.hidden = false;
+          } else {
+            albumLink.hidden = true;
+          }
+          spotifyLink.href = `https://open.spotify.com/search/${encodeURIComponent(
+            `${track.title} ${track.artist}`
+          )}`;
+          spotifyLink.hidden = false;
+          linkDivider.hidden = false;
+          audio.src = resolved.previewUrl;
+          previewReady = true;
+        };
+
+        if (match) {
+          applyMatch(match);
+        } else {
+          fetch(apiUrl)
+            .then((response) => response.json())
+            .then((data) => {
+              applyMatch(data.results && data.results[0]);
+            })
+            .catch(() => {
+            });
+        }
+
+        card.addEventListener("mouseenter", () => {
+          if (!audioUnlocked) {
+            unlock.style.display = "grid";
+            return;
+          }
+          if (!previewReady) {
+            return;
+          }
+          hoverActive = true;
+          hoverStart = performance.now();
+          if (audio.readyState < 1) {
+            audio.addEventListener(
+              "loadedmetadata",
+              () => {
+                audio.currentTime = clipStart;
+              },
+              { once: true }
+            );
+          } else {
+            audio.currentTime = clipStart;
+          }
+          audio.play().then(() => {
+            card.classList.add("is-playing");
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          if (!previewReady) {
+            return;
+          }
+          hoverActive = false;
+          stopPreview("mouseleave");
+        });
+      };
+
+      const renderCategory = (category) => {
+        grid.innerHTML = "";
+        (tracksByCategory[category] || []).forEach(makeCard);
+      };
+
+      toggleButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          toggleButtons.forEach((btn) => {
+            btn.classList.remove("is-active");
+            btn.setAttribute("aria-pressed", "false");
+          });
+          button.classList.add("is-active");
+          button.setAttribute("aria-pressed", "true");
+          renderCategory(button.dataset.category);
+        });
+      });
+
+      renderCategory("Albums");
+
+      const fetchPreview = (query) => {
+        const apiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(
+          query
+        )}&media=music&entity=song&limit=1`;
+        return fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => data.results && data.results[0]);
+      };
+
+      searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const value = searchInput.value.trim();
+        if (!value) {
+          searchError.textContent = "Enter an artist and song name.";
+          return;
+        }
+        searchError.textContent = "";
+        fetchPreview(value)
+          .then((match) => {
+            if (!match || !match.previewUrl) {
+              searchError.textContent = "No preview found for that search.";
+              return;
+            }
+            gtag("event", "search_submit", {
+              event_category: "search",
+              search_term: value,
+            });
+            makeCard(
+              { artist: match.artistName, title: match.trackName },
+              { match }
+            );
+            searchInput.value = "";
+            clearSearch.hidden = true;
+          })
+          .catch(() => {
+            searchError.textContent = "Preview search failed. Try again.";
+          });
+      });
+
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        searchError.textContent = "";
+        clearSearch.hidden = true;
+        searchInput.focus();
+      });
+
+      searchInput.addEventListener("input", () => {
+        clearSearch.hidden = searchInput.value.trim() === "";
+      });
+
+      searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          searchForm.requestSubmit();
+        }
+      });
+    </script>
+  </body>
+</html>
