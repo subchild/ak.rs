@@ -64,6 +64,15 @@
         opacity: 0.7;
       }
 
+      .album-note {
+        margin: 18px auto 0;
+        max-width: 640px;
+        font-size: 0.95rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.4;
+        opacity: 0.75;
+      }
+
       .toggle {
         display: inline-flex;
         margin-top: 18px;
@@ -94,7 +103,7 @@
         gap: 8px;
         text-align: center;
         align-items: center;
-        width: min(720px, 100%);
+        width: min(620px, 100%);
         margin: 32px auto 0;
         padding: 8px 14px;
         background: #f8f6f1;
@@ -142,6 +151,23 @@
 
       .search .error:empty {
         display: none;
+      }
+
+      .search-note {
+        margin: 8px 0 0;
+        font-size: 0.75rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        opacity: 0.65;
+        text-align: center;
+      }
+
+      .search-wrap {
+        width: min(620px, 100%);
+        margin: 32px auto 0;
+      }
+
+      .search-wrap .search {
+        margin: 0;
       }
 
       .grid {
@@ -268,7 +294,7 @@
     <main class="page">
       <section class="stack">
         <div>
-          <h1 class="page-title">preview.fm</h1>
+          <h1 class="page-title">2025 Faves</h1>
           <p class="page-subtitle">Preview cuts from these excellent 2025 releases</p>
           <div class="toggle" role="tablist" aria-label="Release type">
             <button class="is-active" type="button" data-category="Albums" aria-pressed="true">
@@ -279,22 +305,29 @@
               Singles &amp; Songs
             </button>
           </div>
+          <p class="album-note" id="category-note">
+            My favorite albums of 2025, ranked. I picked one track per record,
+            but the full albums are worth your time.
+          </p>
         </div>
         <div class="grid" id="preview-grid"></div>
-        <form class="search" id="search-form">
-          <div class="search-field">
-            <input
-              id="search-input"
-              type="search"
-              placeholder="enter your artist and song name to add a preview"
-              autocomplete="off"
-            />
-            <button type="button" class="clear-search" id="clear-search" hidden>
-              ×
-            </button>
-          </div>
-          <div class="error" id="search-error"></div>
-        </form>
+        <div class="search-wrap">
+          <form class="search" id="search-form">
+            <div class="search-field">
+              <input
+                id="search-input"
+                type="search"
+                placeholder="enter your artist and song name to add a preview"
+                autocomplete="off"
+              />
+              <button type="button" class="clear-search" id="clear-search" hidden>
+                ×
+              </button>
+            </div>
+            <div class="error" id="search-error"></div>
+          </form>
+          <p class="search-note">A quick cameo, not a permanent guest.</p>
+        </div>
       </section>
     </main>
 
@@ -371,7 +404,7 @@
           {
             artist: "Farhot",
             title: "Ya Saghira",
-            bio: "Berlin-based producer blending melodic percussion with cinematic electronics, often weaving Middle Eastern motifs into modern club textures.",
+            bio: "Afghan-born, Hamburg-based producer known for cinematic, sample-driven sound that blends hip-hop with Middle Eastern influences.",
           },
           {
             artist: "Max Cooper & Rob Clouth",
@@ -396,7 +429,7 @@
           {
             artist: "Rob Clouth",
             title: "Did You Follow?",
-            bio: "UK producer known for intricate sound design, blending melodic warmth with experimental electronic detail and emotive phrasing.",
+            bio: "Barcelona-based producer known for intricate sound design, blending melodic warmth with experimental electronic detail and emotive phrasing.",
           },
           {
             artist: "Disaffected",
@@ -412,7 +445,7 @@
           {
             artist: "PS11",
             title: "Intervals",
-            bio: "Electronic artist exploring spacious, rhythmic compositions that sit between ambient drift and club propulsion.",
+            bio: "Upstate New York–based electronic artist exploring spacious, rhythmic compositions that sit between ambient drift and club propulsion.",
           },
         ],
         "Singles & Songs": [
@@ -510,6 +543,16 @@
       const searchInput = document.getElementById("search-input");
       const searchError = document.getElementById("search-error");
       const clearSearch = document.getElementById("clear-search");
+      const categoryNote = document.getElementById("category-note");
+
+      const categoryNotes = {
+        "Albums":
+          "My favorite albums of 2025, ranked. (Below is a pick from each.)",
+        "EPs":
+          "These EPs really stood out for me.",
+        "Singles & Songs":
+          "These songs got lots of plays.",
+      };
 
       const makeCard = (track, options = {}) => {
         const { match } = options;
@@ -717,6 +760,10 @@
           btn.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
         renderCategory(category);
+        if (categoryNote) {
+          categoryNote.innerHTML =
+            categoryNotes[category] || categoryNotes.Albums;
+        }
         const url = new URL(window.location.href);
         url.searchParams.set("category", category);
         window.history.replaceState({}, "", url);
