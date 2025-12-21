@@ -548,6 +548,7 @@
             artist: "Bon Iver",
             title: "Things Behind Things Behind Things",
             clipStart: 13,
+            volume: 0.6,
             rank: 5,
             bio: "Justin Vernon's project with layered harmonies and emotional songwriting that blurs indie folk, electronic, and ambient forms.",
           },
@@ -1028,6 +1029,7 @@
 
         const clipStart = track.clipStart ?? defaultClipStart;
         const clipEnd = clipStart + clipDuration;
+        const clipVolume = track.volume ?? 1;
 
         const trackHoverEnd = (reason) => {
           if (!hoverStart) {
@@ -1195,6 +1197,7 @@
             } else {
               audio.currentTime = clipStart;
             }
+            audio.volume = clipVolume;
             audio.play().then(() => {
               card.classList.add("is-playing");
             });
@@ -1236,6 +1239,7 @@
           } else {
             audio.currentTime = clipStart;
           }
+          audio.volume = clipVolume;
           audio.play().then(() => {
             card.classList.add("is-playing");
           });
