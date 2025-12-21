@@ -178,6 +178,28 @@
         margin-top: 20px;
       }
 
+      .grid.is-covers {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .grid.is-covers .card {
+        padding: 0;
+        border: none;
+        background: transparent;
+      }
+
+      .grid.is-covers .artwork {
+        margin: 0;
+      }
+
+      .card.cover-only .subtitle,
+      .card.cover-only .bio,
+      .card.cover-only .title,
+      .card.cover-only .album-link,
+      .card.cover-only .link-divider {
+        display: none;
+      }
+
       .card {
         padding: 20px;
         border: 2px solid #000;
@@ -208,6 +230,23 @@
         object-fit: cover;
         background: #fff;
         margin: 0 0 10px;
+        display: block;
+      }
+
+      .cover-only-art {
+        margin: 0;
+      }
+
+      @media (max-width: 900px) {
+        .grid.is-covers {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .grid.is-covers {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       .bio {
@@ -303,6 +342,9 @@
             <button type="button" data-category="EPs" aria-pressed="false">EPs</button>
             <button type="button" data-category="Singles & Songs" aria-pressed="false">
               Singles &amp; Songs
+            </button>
+            <button type="button" data-category="Everything Grid" aria-pressed="false">
+              Everything Grid
             </button>
           </div>
           <p class="album-note" id="category-note">
@@ -544,6 +586,9 @@
       const searchError = document.getElementById("search-error");
       const clearSearch = document.getElementById("clear-search");
       const categoryNote = document.getElementById("category-note");
+      const prefersTouch = window.matchMedia("(hover: none) and (pointer: coarse)");
+      let activeAudio = null;
+      let activeCard = null;
 
       const categoryNotes = {
         "Albums":
@@ -555,9 +600,12 @@
       };
 
       const makeCard = (track, options = {}) => {
-        const { match } = options;
+        const { match, coverOnly = false } = options;
         const card = document.createElement("article");
         card.className = "card";
+        if (coverOnly) {
+          card.classList.add("cover-only");
+        }
         card.setAttribute("role", "button");
         card.setAttribute(
           "aria-label",
@@ -573,7 +621,7 @@
         subtitle.textContent = track.artist;
 
         const artwork = document.createElement("img");
-        artwork.className = "artwork";
+        artwork.className = coverOnly ? "artwork cover-only-art" : "artwork";
         artwork.alt = `${track.title} album artwork`;
 
         const bio = document.createElement("p");
@@ -670,6 +718,18 @@
           trackHoverEnd(reason);
         };
 
+        const stopActivePreview = (reason = "switch") => {
+          if (activeAudio && activeAudio !== audio) {
+            activeAudio.pause();
+            if (activeCard) {
+              activeCard.classList.remove("is-playing");
+            }
+          }
+          activeAudio = audio;
+          activeCard = card;
+          trackHoverEnd(reason);
+        };
+
         audio.addEventListener("timeupdate", () => {
           if (hoverActive && audio.currentTime >= clipEnd) {
             hoverActive = false;
@@ -713,7 +773,44 @@
             });
         }
 
-        card.addEventListener("mouseenter", () => {
+        if (!prefersTouch.matches) {
+          card.addEventListener("mouseenter", () => {
+            if (!audioUnlocked) {
+              unlock.style.display = "grid";
+              return;
+            }
+            if (!previewReady) {
+              return;
+            }
+            stopActivePreview("hover_switch");
+            hoverActive = true;
+            hoverStart = performance.now();
+            if (audio.readyState < 1) {
+              audio.addEventListener(
+                "loadedmetadata",
+                () => {
+                  audio.currentTime = clipStart;
+                },
+                { once: true }
+              );
+            } else {
+              audio.currentTime = clipStart;
+            }
+            audio.play().then(() => {
+              card.classList.add("is-playing");
+            });
+          });
+
+          card.addEventListener("mouseleave", () => {
+            if (!previewReady) {
+              return;
+            }
+            hoverActive = false;
+            stopPreview("mouseleave");
+          });
+        }
+
+        artwork.addEventListener("click", () => {
           if (!audioUnlocked) {
             unlock.style.display = "grid";
             return;
@@ -721,6 +818,11 @@
           if (!previewReady) {
             return;
           }
+          if (activeAudio === audio && !audio.paused) {
+            stopPreview("tap_stop");
+            return;
+          }
+          stopActivePreview("tap_switch");
           hoverActive = true;
           hoverStart = performance.now();
           if (audio.readyState < 1) {
@@ -738,18 +840,21 @@
             card.classList.add("is-playing");
           });
         });
-
-        card.addEventListener("mouseleave", () => {
-          if (!previewReady) {
-            return;
-          }
-          hoverActive = false;
-          stopPreview("mouseleave");
-        });
       };
 
       const renderCategory = (category) => {
         grid.innerHTML = "";
+        if (category === "Everything Grid") {
+          grid.classList.add("is-covers");
+          [
+            ...tracksByCategory.Albums,
+            ...tracksByCategory.EPs,
+            ...tracksByCategory["Singles & Songs"],
+          ].forEach((track) => makeCard(track, { coverOnly: true }));
+          return;
+        }
+
+        grid.classList.remove("is-covers");
         (tracksByCategory[category] || []).forEach(makeCard);
       };
 
