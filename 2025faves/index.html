@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>2025 Faves</title>
+    <title>AKRS - 2025 Faves</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,6 +35,7 @@
         background: var(--bg);
         color: var(--ink);
         font-family: "Mrs Sheppards", "Comic Sans MS", cursive;
+        overflow-x: hidden;
       }
 
       .page {
@@ -42,6 +43,8 @@
         display: grid;
         place-items: center;
         padding: 24px 24px 64px;
+        width: 100%;
+        overflow-x: hidden;
       }
 
       .stack {
@@ -215,6 +218,14 @@
         display: none;
       }
 
+      .card.cover-only .rank {
+        display: none;
+      }
+
+      .card.cover-only .status {
+        display: none;
+      }
+
       .grid.is-covers:hover .card:hover {
         transform: scale(1.25);
         z-index: 1;
@@ -257,6 +268,14 @@
         display: block;
       }
 
+      .rank {
+        font-size: 0.85rem;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.08em;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
       .cover-only-art {
         margin: 0;
       }
@@ -281,6 +300,16 @@
         opacity: 0.75;
       }
 
+      .status {
+        margin: 0 0 10px;
+        font-size: 0.8rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        opacity: 0.6;
+      }
+
+      .card.is-unavailable {
+        opacity: 0.7;
+      }
       .subtitle {
         margin: 0 0 6px;
         font-size: 1.5rem;
@@ -471,12 +500,14 @@
             artist: "Sam Akpro",
             title: "I Can See the Sun",
             clipStart: 20,
+            rank: 1,
             bio: "London-based artist blending post-punk edges with intimate songwriting, threading moody guitars and soft vocals through spare, cinematic grooves.",
           },
           {
             artist: "Gogo Penguin",
             title: "What We Are and What We Are Meant to Be",
             clipStart: 13,
+            rank: 2,
             bio: "Manchester trio fusing contemporary jazz with electronic pulse, crafting propulsive piano-led pieces that feel cinematic and club-ready.",
           },
           {
@@ -484,42 +515,49 @@
             title: "Easier",
             album: "The Fork",
             clipStart: 10,
+            rank: 3,
             bio: "London singer-guitarist mixing jazz harmony, warm soul phrasing, and breezy guitar lines into fluid, rhythm-forward songs.",
           },
           {
             artist: "Bon Iver",
             title: "Things Behind Things Behind Things",
             clipStart: 13,
+            rank: 4,
             bio: "Justin Vernon's project with layered harmonies and emotional songwriting that blurs indie folk, electronic, and ambient forms.",
           },
           {
             artist: "Weval",
             title: "Head First",
             clipStart: 11,
+            rank: 5,
             bio: "Dutch duo blending synths, broken-beats, and hazy vocals into textured electronic tracks that drift between club energy and dreamlike calm.",
           },
           {
             artist: "Reid Willis",
             title: "Diamong Spitter",
             clipStart: 8,
+            rank: 6,
             bio: "New Orleans producer and composer crafting crisp, electronics with shimmering synth layers, elastic bass, and modern melodies.",
           },
           {
             artist: "Maribou State",
             title: "Otherside",
             clipStart: 6,
+            rank: 7,
             bio: "UK duo pairing organic instrumentation with downtempo electronics, building warm, soulful tracks that feel both intimate and expansive.",
           },
           {
             artist: "Okgiorgio",
             title: "ko tempo",
             clipStart: 11,
+            rank: 8,
             bio: "Italian producer making sleek, club-ready tracks with glossy synth work, hypnotic grooves, and subtle melodic shifts.",
           },
           {
             artist: "Rival Consoles",
             title: "2 Forms",
             clipStart:20,
+            rank: 9,
             bio: "British composer crafting immersive, analog-leaning electronic music, rich with evolving textures, pulsing rhythms, and cinematic atmosphere.",
           },
         ],
@@ -680,6 +718,48 @@
       let activeAudio = null;
       let activeCard = null;
 
+      const MAX_CONCURRENT_FETCHES = 4;
+      const fetchQueue = [];
+      let activeFetches = 0;
+
+      const runNextFetch = () => {
+        if (activeFetches >= MAX_CONCURRENT_FETCHES || fetchQueue.length === 0) {
+          return;
+        }
+        const next = fetchQueue.shift();
+        activeFetches += 1;
+        next
+          .fn()
+          .then(next.resolve, next.reject)
+          .finally(() => {
+            activeFetches -= 1;
+            runNextFetch();
+          });
+      };
+
+      const queueFetch = (fn) =>
+        new Promise((resolve, reject) => {
+          fetchQueue.push({ fn, resolve, reject });
+          runNextFetch();
+        });
+
+      const fetchJsonWithRetry = (url, retries = 2, delayMs = 300) =>
+        queueFetch(() => fetch(url))
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+          })
+          .catch((error) => {
+            if (retries <= 0) {
+              throw error;
+            }
+            return new Promise((resolve) => setTimeout(resolve, delayMs)).then(() =>
+              fetchJsonWithRetry(url, retries - 1, delayMs * 2)
+            );
+          });
+
       const categoryNotes = {
         "Albums": "My favorite albums of the year, ranked. (Below is a pick from each.)",
         "EPs": "These EPs really stood out for me.",
@@ -708,6 +788,12 @@
         subtitle.className = "subtitle";
         subtitle.textContent = track.artist;
 
+        const rank = document.createElement("div");
+        rank.className = "rank";
+        if (typeof track.rank === "number") {
+          rank.textContent = `#${track.rank}`;
+        }
+
         const artwork = document.createElement("img");
         artwork.className = coverOnly ? "artwork cover-only-art" : "artwork";
         artwork.alt = `${track.title} album artwork`;
@@ -715,6 +801,10 @@
         const bio = document.createElement("p");
         bio.className = "bio";
         bio.textContent = track.bio || "";
+
+        const status = document.createElement("p");
+        status.className = "status";
+        status.hidden = true;
 
         const audio = document.createElement("audio");
         audio.preload = "metadata";
@@ -782,12 +872,15 @@
         const linkIcons = document.createElement("div");
         linkIcons.className = "link-icons";
         linkIcons.append(albumLink, spotifyLink, youtubeLink);
+        linkIcons.hidden = true;
 
         card.append(
+          ...(typeof track.rank === "number" ? [rank] : []),
           artwork,
           subtitle,
           bio,
           title,
+          status,
           linkIcons,
           audio
         );
@@ -855,8 +948,16 @@
           }
         });
 
+        const showUnavailable = (message) => {
+          status.textContent = message;
+          status.hidden = false;
+          card.classList.add("is-unavailable");
+          linkIcons.hidden = true;
+        };
+
         const applyMatch = (resolved) => {
           if (!resolved || !resolved.previewUrl) {
+            showUnavailable("Preview unavailable.");
             return;
           }
           if (resolved.artworkUrl100) {
@@ -876,6 +977,7 @@
             `${track.title} ${track.artist}`
           )}`;
           youtubeLink.hidden = false;
+          linkIcons.hidden = false;
           audio.src = resolved.previewUrl;
           previewReady = true;
         };
@@ -883,12 +985,12 @@
         if (match) {
           applyMatch(match);
         } else {
-          fetch(apiUrl)
-            .then((response) => response.json())
+          fetchJsonWithRetry(apiUrl)
             .then((data) => {
               applyMatch(data.results && data.results[0]);
             })
             .catch(() => {
+              showUnavailable("Preview unavailable.");
             });
         }
 
@@ -1028,8 +1130,7 @@
         const apiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(
           query
         )}&media=music&entity=song&limit=1`;
-        return fetch(apiUrl)
-          .then((response) => response.json())
+        return fetchJsonWithRetry(apiUrl)
           .then((data) => data.results && data.results[0]);
       };
 
