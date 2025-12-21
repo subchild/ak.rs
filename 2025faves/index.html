@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mrs+Sheppards&family=Space+Grotesk:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;600&family=Victor+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3B1X1DJFR6"></script>
@@ -34,7 +34,7 @@
         min-height: 100vh;
         background: var(--bg);
         color: var(--ink);
-        font-family: "Mrs Sheppards", "Comic Sans MS", cursive;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
         overflow-x: hidden;
       }
 
@@ -109,8 +109,8 @@
         flex: 1;
         border: none;
         background: transparent;
-        padding: 12px 30px;
-        font-size: 0.75rem;
+        padding: 6px 12px;
+        font-size: 0.8rem;
         font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
         cursor: pointer;
       }
@@ -260,9 +260,10 @@
       }
 
       .title {
-        font-size: 0.96rem;
+        font-size: 0.8rem;
+        text-transform: uppercase;
         margin: 0 0 10px;
-        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        font-family: "Victor Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
       }
 
       .artwork {
@@ -275,11 +276,18 @@
       }
 
       .rank {
-        font-size: 0.85rem;
-        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        font-size: 1rem;
+        font-family: "Victor Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
         letter-spacing: 0.08em;
         margin-bottom: 15px;
-        font-weight: bold;
+        font-weight: 600;
+      }
+
+      .rank::before {
+        content: "#";
+        font-size: 0.7em;
+        opacity: 0.7;
+        vertical-align: top;
       }
 
       .cover-only-art {
@@ -824,7 +832,7 @@
         const rank = document.createElement("div");
         rank.className = "rank";
         if (typeof track.rank === "number") {
-          rank.textContent = `#${track.rank}`;
+          rank.textContent = `${track.rank}`;
         }
 
         const artwork = document.createElement("img");
