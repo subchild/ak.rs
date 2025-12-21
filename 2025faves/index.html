@@ -250,6 +250,14 @@
         transition: transform 120ms ease, box-shadow 120ms ease;
       }
 
+      .card.is-featured {
+        grid-column: span 2;
+      }
+
+      .card.is-featured .artwork {
+        margin-bottom: 14px;
+      }
+
       .card:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
@@ -809,11 +817,14 @@
       };
 
       const makeCard = (track, options = {}) => {
-        const { match, coverOnly = false } = options;
+        const { match, coverOnly = false, featured = false } = options;
         const card = document.createElement("article");
         card.className = "card";
         if (coverOnly) {
           card.classList.add("cover-only");
+        }
+        if (featured) {
+          card.classList.add("is-featured");
         }
         card.setAttribute("role", "button");
         card.setAttribute(
@@ -1127,7 +1138,10 @@
         }
 
         grid.classList.remove("is-covers");
-        (tracksByCategory[category] || []).forEach(makeCard);
+        (tracksByCategory[category] || []).forEach((track, index) => {
+          const featured = category === "Albums" && index < 2;
+          makeCard(track, { featured });
+        });
       };
 
       const setActiveCategory = (category) => {
