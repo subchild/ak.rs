@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;600&family=Victor+Mono:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;600&family=Victor+Mono:wght@400;600&family=Waiting+for+the+Sunrise&display=swap"
       rel="stylesheet"
     />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3B1X1DJFR6"></script>
@@ -61,9 +61,10 @@
       }
 
       .page-subtitle {
-        margin: .5rem 0 1rem 0;
-        font-size: 1rem;
-        font-family: system-ui, -apple-system, sans-serif;
+        margin: 0.5rem 0 1rem 0;
+        font-size: 1.2rem;
+        font-family: "Waiting for the Sunrise", cursive;
+        font-weight: 500;
       }
 
       .album-note {
@@ -250,19 +251,6 @@
         transition: transform 120ms ease, box-shadow 120ms ease;
       }
 
-      .card.is-featured {
-        grid-column: span 2;
-      }
-
-      .card.is-featured .artwork {
-        margin-bottom: 14px;
-      }
-
-      @media (max-width: 600px) {
-        .card.is-featured {
-          grid-column: span 1;
-        }
-      }
 
       .card:hover {
         transform: translateY(-2px);
@@ -453,7 +441,7 @@
       <section class="stack">
         <div>
           <h1 class="page-title">2025 Faves</h1>
-          <p class="page-subtitle">Moments of this year's music chosen for freshness, composition, and sonic craft.</p>
+          <p class="page-subtitle">A selection of this year’s standout tunes. Picked for freshness, composition, and sonic craft.</p>
           <div class="toggle" role="tablist" aria-label="Release type">
             <button class="is-active" type="button" data-category="Albums" aria-pressed="true">
               Albums
@@ -543,47 +531,46 @@
             bio: "Manchester trio fusing contemporary jazz with electronic pulse, crafting propulsive piano-led pieces that feel cinematic and club-ready.",
           },
           {
+            artist: "Muadeep",
+            title: "Wanaba",
+            rank: 3,
+            bio: "Muadeep crafts dark, cinematic electronic music that blends atmospheric sound design with driving rhythms.", 
+          },
+          {
             artist: "Oscar Jerome",
             title: "Easier",
             album: "The Fork",
             clipStart: 10,
-            rank: 3,
+            rank: 4,
             bio: "London singer-guitarist mixing jazz harmony, warm soul phrasing, and breezy guitar lines into fluid, rhythm-forward songs.",
           },
           {
             artist: "Bon Iver",
             title: "Things Behind Things Behind Things",
             clipStart: 13,
-            rank: 4,
-            bio: "Justin Vernon's project with layered harmonies and emotional songwriting that blurs indie folk, electronic, and ambient forms.",
-          },
-          {
-            artist: "Weval",
-            title: "Head First",
-            clipStart: 11,
             rank: 5,
-            bio: "Dutch duo blending synths, broken-beats, and hazy vocals into textured electronic tracks that drift between club energy and dreamlike calm.",
-          },
-          {
-            artist: "Reid Willis",
-            title: "Diamong Spitter",
-            clipStart: 8,
-            rank: 6,
-            bio: "New Orleans producer and composer crafting crisp, electronics with shimmering synth layers, elastic bass, and modern melodies.",
+            bio: "Justin Vernon's project with layered harmonies and emotional songwriting that blurs indie folk, electronic, and ambient forms.",
           },
           {
             artist: "Maribou State",
             title: "Otherside",
             clipStart: 6,
-            rank: 7,
+            rank: 6,
             bio: "UK duo pairing organic instrumentation with downtempo electronics, building warm, soulful tracks that feel both intimate and expansive.",
           },
           {
-            artist: "Okgiorgio",
-            title: "ko tempo",
+            artist: "Reid Willis",
+            title: "Diamong Spitter",
+            clipStart: 8,
+            rank: 7,
+            bio: "New Orleans producer and composer crafting crisp, electronics with shimmering synth layers, elastic bass, and modern melodies.",
+          },
+          {
+            artist: "Weval",
+            title: "Head First",
             clipStart: 11,
             rank: 8,
-            bio: "Italian producer making sleek, club-ready tracks with glossy synth work, hypnotic grooves, and subtle melodic shifts.",
+            bio: "Dutch duo blending synths, broken-beats, and hazy vocals into textured electronic tracks that drift between club energy and dreamlike calm.",
           },
           {
             artist: "Rival Consoles",
@@ -593,10 +580,11 @@
             bio: "British composer crafting immersive, analog-leaning electronic music, rich with evolving textures, pulsing rhythms, and cinematic atmosphere.",
           },
           {
-            artist: "Surprise Chef",
-            title: "Websites",
+            artist: "Okgiorgio",
+            title: "ko tempo",
+            clipStart: 11,
             rank: 10,
-            bio: "Melbourne's instrumental soul and funk group known for their warm, cinematic grooves and tightly arranged, ’70s-inspired productions.",
+            bio: "Italian producer making sleek, club-ready tracks with glossy synth work, hypnotic grooves, and subtle melodic shifts.",
           },
         ],
         EPs: [
@@ -683,14 +671,6 @@
             clipStart: 3,
             bio: "Producer building melodic electronic tracks with warm pads, textured percussion, and a late-night glow.",
           },
-/*
-          {
-            artist: "Envy",
-            title: "Damaio",
-            clipStart: 20,
-            bio: "Electronic producer crafting moody, atmospheric tracks with crisp drums and sleek, modern synth textures.",
-          },
-*/
           {
             artist: "VIER, Machinedrum, Thys, Holly",
             title: "SOLITU",
@@ -704,12 +684,14 @@
             clipStart: 20,
             bio: "German progressive metal trio known for virtuosic guitar work, intricate rhythms, and melodic, emotionally charged songwriting.",
           },
+/*
           {
             artist: "Verses GT",
             title: "Unknown",
             clipStart: 14,
             bio: "New collaboration between Jacques Greene and Nosaj Thing, merging their signature styles into a sleek, immersive electronic project.",
           },
+*/
           {
             artist: "Technimatic",
             title: "Strength",
@@ -728,6 +710,12 @@
             title: "Falling",
             clipStart: 15,
             bio: "Collaboration pairing airy vocals with shimmering synths and a soft, atmospheric electronic foundation.",
+          },
+          {
+            artist: "Deftones",
+            title: "~metal dream",
+            clipStart: 22,
+            bio: "American alternative metal band from Sacramento, California returned with a new release.",
           },
           {
             artist: "Mefjus",
@@ -754,8 +742,13 @@
             clipStart: 22,
             bio: "Collab between The Arcturians and DJ Ride, blending cinematic synth work with turntablist energy, heavy bass, and sharp rhythmic cuts.",
           },
+          {
+            artist: "Surprise Chef",
+            title: "Websites",
+            rank: 11,
+            bio: "Melbourne's instrumental soul and funk group known for their warm, cinematic grooves and tightly arranged, ’70s-inspired productions.",
+          },
 */
-
         ],
       };
 
@@ -777,9 +770,12 @@
 
       const MAX_CONCURRENT_FETCHES = 3;
       const MIN_FETCH_INTERVAL_MS = 250;
+      const PREVIEW_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
       const fetchQueue = [];
       let activeFetches = 0;
       let lastFetchTime = 0;
+      const previewOverrides = new Map();
+      let previewOverridesReady = null;
 
       const runNextFetch = () => {
         if (activeFetches >= MAX_CONCURRENT_FETCHES || fetchQueue.length === 0) {
@@ -804,8 +800,19 @@
 
       const readCache = (key) => {
         try {
-          const raw = sessionStorage.getItem(key);
-          return raw ? JSON.parse(raw) : null;
+          const raw = localStorage.getItem(key);
+          if (!raw) {
+            return null;
+          }
+          const parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== "object") {
+            return null;
+          }
+          if (Date.now() - parsed.timestamp > PREVIEW_CACHE_TTL_MS) {
+            localStorage.removeItem(key);
+            return null;
+          }
+          return parsed.data;
         } catch {
           return null;
         }
@@ -813,10 +820,32 @@
 
       const writeCache = (key, value) => {
         try {
-          sessionStorage.setItem(key, JSON.stringify(value));
+          localStorage.setItem(
+            key,
+            JSON.stringify({ timestamp: Date.now(), data: value })
+          );
         } catch {
         }
       };
+
+      const buildPreviewKey = (track) =>
+        `${track.artist}||${track.title}`.toLowerCase();
+
+      const loadPreviewOverrides = () =>
+        fetch("preview-cache.json")
+          .then((response) => (response.ok ? response.json() : null))
+          .then((data) => {
+            if (!data || !data.items) {
+              return;
+            }
+            Object.entries(data.items).forEach(([key, value]) => {
+              previewOverrides.set(key.toLowerCase(), value);
+            });
+          })
+          .catch(() => {
+          });
+
+      previewOverridesReady = loadPreviewOverrides();
 
       const fetchJsonWithRetry = (url, retries = 2, delayMs = 300) => {
         const cacheKey = `preview-cache:${url}`;
@@ -861,14 +890,11 @@
       };
 
       const makeCard = (track, options = {}) => {
-        const { match, coverOnly = false, featured = false } = options;
+        const { match, coverOnly = false } = options;
         const card = document.createElement("article");
         card.className = "card";
         if (coverOnly) {
           card.classList.add("cover-only");
-        }
-        if (featured) {
-          card.classList.add("is-featured");
         }
         card.setAttribute("role", "button");
         card.setAttribute(
@@ -1056,8 +1082,10 @@
             showUnavailable("Preview unavailable.");
             return;
           }
-          if (resolved.artworkUrl100) {
-            artwork.src = resolved.artworkUrl100.replace("100x100", "300x300");
+          const artworkUrl =
+            resolved.artworkUrl100 || resolved.artworkUrl || resolved.artwork;
+          if (artworkUrl) {
+            artwork.src = artworkUrl.replace("100x100", "300x300");
           } else {
             artwork.alt = "Album artwork unavailable";
           }
@@ -1076,19 +1104,62 @@
           linkIcons.hidden = false;
           audio.src = resolved.previewUrl;
           previewReady = true;
+          status.hidden = true;
         };
 
-        if (match) {
-          applyMatch(match);
-        } else {
-          fetchJsonWithRetry(apiUrl)
-            .then((data) => {
-              applyMatch(data.results && data.results[0]);
+        const previewKey = buildPreviewKey(track);
+        let resolving = false;
+
+        const resolvePreview = () => {
+          if (previewReady || resolving) {
+            return;
+          }
+          resolving = true;
+          status.textContent = "Loading preview...";
+          status.hidden = false;
+          if (match) {
+            applyMatch(match);
+            resolving = false;
+            return;
+          }
+          previewOverridesReady
+            .then(() => {
+              const override = previewOverrides.get(previewKey);
+              if (override) {
+                applyMatch(override);
+                resolving = false;
+                return;
+              }
+              return fetchJsonWithRetry(apiUrl)
+                .then((data) => {
+                  applyMatch(data.results && data.results[0]);
+                })
+                .catch(() => {
+                  showUnavailable("Preview unavailable.");
+                })
+                .finally(() => {
+                  resolving = false;
+                });
             })
             .catch(() => {
+              resolving = false;
               showUnavailable("Preview unavailable.");
             });
-        }
+        };
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                resolvePreview();
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "200px" }
+        );
+
+        observer.observe(card);
 
         if (coverOnly && !prefersTouch.matches) {
           card.addEventListener("click", () => {
@@ -1107,6 +1178,7 @@
               return;
             }
             if (!previewReady) {
+              resolvePreview();
               return;
             }
             stopActivePreview("hover_switch");
@@ -1143,6 +1215,7 @@
             return;
           }
           if (!previewReady) {
+            resolvePreview();
             return;
           }
           if (activeAudio === audio && !audio.paused) {
@@ -1182,10 +1255,8 @@
         }
 
         grid.classList.remove("is-covers");
-        (tracksByCategory[category] || []).forEach((track, index) => {
-          const featured =
-            category === "Albums" && index < 2 && !narrowLayout.matches;
-          makeCard(track, { featured });
+        (tracksByCategory[category] || []).forEach((track) => {
+          makeCard(track);
         });
       };
 
