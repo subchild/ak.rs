@@ -41,7 +41,7 @@
         min-height: 100vh;
         display: grid;
         place-items: center;
-        padding: 48px 24px 64px;
+        padding: 24px 24px 64px;
       }
 
       .stack {
@@ -54,14 +54,13 @@
       .page-title {
         font-size: clamp(2.6rem, 6vw, 4rem);
         margin: 0;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
       }
 
       .page-subtitle {
-        margin: 10px 0 0;
-        font-size: 1.1rem;
+        margin: .5rem 0 1rem 0;
+        font-size: 1rem;
         font-family: system-ui, -apple-system, sans-serif;
-        letter-spacing: 0.02em;
-        opacity: 0.7;
       }
 
       .album-note {
@@ -71,6 +70,20 @@
         font-family: system-ui, -apple-system, sans-serif;
         line-height: 1.4;
         opacity: 0.75;
+      }
+
+      .playlist-link {
+        display: inline-block;
+        font-size: 0.9rem;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        color: #000;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+      }
+
+      .playlist-wrap {
+        margin-top: 18px;
+        text-align: center;
       }
 
       .toggle {
@@ -88,7 +101,7 @@
         border: none;
         background: transparent;
         padding: 12px 30px;
-        font-size: 0.95rem;
+        font-size: 0.75rem;
         font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
         cursor: pointer;
       }
@@ -175,7 +188,6 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 18px;
-        margin-top: 20px;
       }
 
       .grid.is-covers {
@@ -186,6 +198,8 @@
         padding: 0;
         border: none;
         background: transparent;
+        transition: transform 180ms ease;
+        transform: scale(1);
       }
 
       .grid.is-covers .artwork {
@@ -196,13 +210,23 @@
       .card.cover-only .bio,
       .card.cover-only .title,
       .card.cover-only .album-link,
-      .card.cover-only .link-divider {
+      .card.cover-only .link-divider,
+      .card.cover-only .link-icons {
         display: none;
+      }
+
+      .grid.is-covers:hover .card:hover {
+        transform: scale(1.25);
+        z-index: 1;
+      }
+
+      .grid.is-covers:hover .card:hover .artwork {
+        outline: 2px solid #fff;
+        outline-offset: -2px;
       }
 
       .card {
         padding: 20px;
-        border: 2px solid #000;
         background: var(--panel);
         text-align: center;
         cursor: pointer;
@@ -271,13 +295,51 @@
         font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
         color: #000;
         text-decoration: none;
-        border-bottom: 1px solid currentColor;
+        border-bottom: none;
       }
 
       .link-divider {
         margin: 0 8px;
         font-size: 0.9rem;
         font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+      }
+
+      .link-icons {
+        display: inline-flex;
+        gap: 14px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4px;
+      }
+
+      .link-icon {
+        display: inline-flex;
+        width: 24px;
+        height: 24px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .link-icon img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        filter: grayscale(1);
+        transition: filter 150ms ease;
+      }
+
+      .link-icon:hover img {
+        filter: grayscale(0);
+      }
+
+      .link-icon.spotify {
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        font-weight: 700;
+      }
+
+      .link-icon.youtube {
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        font-weight: 700;
       }
 
       .album-link[hidden] {
@@ -334,7 +396,7 @@
       <section class="stack">
         <div>
           <h1 class="page-title">2025 Faves</h1>
-          <p class="page-subtitle">Preview cuts from these excellent 2025 releases</p>
+          <p class="page-subtitle">Moments of this year's music chosen for freshness, composition, and sonic craft.</p>
           <div class="toggle" role="tablist" aria-label="Release type">
             <button class="is-active" type="button" data-category="Albums" aria-pressed="true">
               Albums
@@ -343,12 +405,12 @@
             <button type="button" data-category="Singles & Songs" aria-pressed="false">
               Singles &amp; Songs
             </button>
-            <button type="button" data-category="Everything Grid" aria-pressed="false">
-              Everything Grid
+            <button type="button" data-category="Everything" aria-pressed="false">
+              Everything
             </button>
           </div>
           <p class="album-note" id="category-note">
-            My favorite albums of 2025, ranked. I picked one track per record,
+            My favorite albums, ranked. I picked one track per record,
             but the full albums are worth your time.
           </p>
         </div>
@@ -368,15 +430,25 @@
             </div>
             <div class="error" id="search-error"></div>
           </form>
-          <p class="search-note">A quick cameo, not a permanent guest.</p>
+          <p class="search-note">It will be a quick cameo, not a permanent guest.</p>
+        </div>
+        <div class="playlist-wrap">
+          <a
+            class="playlist-link"
+            href="https://open.spotify.com/playlist/3qHmYL8neM5TIX56DEB9HF?si=ead093d1b6b74562"
+            target="_blank"
+            rel="noopener"
+          >
+            2025 Faves Playlist on Spotify
+          </a>
         </div>
       </section>
     </main>
 
     <div class="unlock" id="unlock">
       <button type="button" id="unlock-button">
-        <span class="desktop-label">Hover to listen. Speakers on.</span>
-        <span class="mobile-label">Long-press to listen. Volume up.</span>
+        <span class="desktop-label">Speakers on. Hover to listen.</span>
+        <span class="mobile-label">Touch the cover to hear a clip.</span>
       </button>
     </div>
 
@@ -398,47 +470,56 @@
           {
             artist: "Sam Akpro",
             title: "I Can See the Sun",
+            clipStart: 20,
             bio: "London-based artist blending post-punk edges with intimate songwriting, threading moody guitars and soft vocals through spare, cinematic grooves.",
           },
           {
             artist: "Gogo Penguin",
             title: "What We Are and What We Are Meant to Be",
+            clipStart: 13,
             bio: "Manchester trio fusing contemporary jazz with electronic pulse, crafting propulsive piano-led pieces that feel cinematic and club-ready.",
           },
           {
             artist: "Oscar Jerome",
             title: "Easier",
             album: "The Fork",
+            clipStart: 12,
             bio: "London singer-guitarist mixing jazz harmony, warm soul phrasing, and breezy guitar lines into fluid, rhythm-forward songs.",
           },
           {
             artist: "Bon Iver",
             title: "Things Behind Things Behind Things",
+            clipStart: 13,
             bio: "Project led by Justin Vernon, known for layered harmonies, experimental production, and emotional songwriting that blurs indie folk, electronic, and ambient forms.",
           },
           {
             artist: "Weval",
             title: "Head First",
+            clipStart: 11,
             bio: "Dutch duo blending lush synths, broken-beat rhythms, and hazy vocals into textured electronic tracks that drift between club energy and dreamlike calm.",
           },
           {
             artist: "Reid Willis",
             title: "Diamong Spitter",
-            bio: "Producer and songwriter crafting crisp, melodic electronic pop with shimmering synth layers, elastic bass, and clean modern hooks.",
+            clipStart: 8,
+            bio: "Producer and songwriter crafting crisp, melodic electronic soundscapes with shimmering synth layers, elastic bass, and clean modern hooks.",
           },
           {
             artist: "Maribou State",
             title: "Otherside",
+            clipStart: 6,
             bio: "UK duo pairing organic instrumentation with downtempo electronics, building warm, soulful tracks that feel both intimate and expansive.",
           },
           {
             artist: "Okgiorgio",
             title: "ko tempo",
+            clipStart: 11,
             bio: "Italian producer making sleek, club-ready tracks with glossy synth work, hypnotic grooves, and subtle melodic shifts.",
           },
           {
             artist: "Rival Consoles",
             title: "2 Forms",
+            clipStart:20,
             bio: "British composer crafting immersive, analog-leaning electronic music, rich with evolving textures, pulsing rhythms, and cinematic atmosphere.",
           },
         ],
@@ -446,11 +527,13 @@
           {
             artist: "Farhot",
             title: "Ya Saghira",
+            clipStart: 20,
             bio: "Afghan-born, Hamburg-based producer known for cinematic, sample-driven sound that blends hip-hop with Middle Eastern influences.",
           },
           {
             artist: "Max Cooper & Rob Clouth",
             title: "Candeleda",
+            clipStart: 15, 
             bio: "A collaboration pairing Max Cooper’s meticulous electronic storytelling with Rob Clouth’s emotive sound design and rich textures.",
           },
           {
@@ -459,8 +542,14 @@
             bio: "Portuguese techno artist focused on raw, driving club cuts with industrial grit, heavy low-end, and hypnotic momentum.",
           },
           {
+            artist: "Kangding Ray",
+            title: "Superfluid",
+            clipStart: 15,
+            bio: "French producer crafting cinematic techno, balancing deep tension, sculpted bass, and refined sonic architecture.",
+          },
+          {
             artist: "ASEC",
-            title: "Nighthawks",
+            title: "Prey Eyes",
             bio: "Producer crafting dark, driving techno with moody atmospheres, tight percussion, and a restless, forward push.",
           },
           {
@@ -479,11 +568,7 @@
             clipStart: 20,
             bio: "Electronic project leaning into tense, driving rhythms with moody textures and a darker, industrial edge.",
           },
-          {
-            artist: "Kangding Ray",
-            title: "Superfluid",
-            bio: "French producer crafting cinematic techno, balancing deep tension, sculpted bass, and refined sonic architecture.",
-          },
+
           {
             artist: "PS11",
             title: "Intervals",
@@ -497,14 +582,32 @@
             bio: "Brooding collaboration combining cinematic synth work, heavy low-end, and stark, emotional sound design.",
           },
           {
+            artist: "Benyayer",
+            title: "The Return",
+            bio: "Electronic producer shaping sleek, modern tracks with bright synths and focused dancefloor energy.",
+          },
+          {
             artist: "Koan Sound",
             title: "Spirals Unfold",
             bio: "UK duo celebrated for hyper-detailed bass music, intricate arrangement, and glossy, future-facing sound design.",
           },
           {
-            artist: "Benyayer",
-            title: "The Return",
-            bio: "Electronic producer shaping sleek, modern tracks with bright synths and focused dancefloor energy.",
+            artist: "IMANU",
+            title: "Falling apart",
+            clipStart: 15,
+            bio: "Dutch producer blending cinematic sound design with heavy bass textures and emotional, futuristic atmospheres.",
+          },
+          {
+            artist: "Mont Duamel",
+            title: "Invisible Lens",
+            clipStart: 3,
+            bio: "Producer building melodic electronic tracks with warm pads, textured percussion, and a late-night glow.",
+          },
+          {
+            artist: "Envy",
+            title: "Damaio",
+            clipStart: 20,
+            bio: "Electronic producer crafting moody, atmospheric tracks with crisp drums and sleek, modern synth textures.",
           },
           {
             artist: "VIER, Machinedrum, Thys, Holly",
@@ -516,19 +619,20 @@
             artist: "Unprocessed",
             title: "Snowlover",
             appleId: "1827910988",
+            clipStart: 1,
             bio: "German progressive metal trio known for virtuosic guitar work, intricate rhythms, and melodic, emotionally charged songwriting.",
           },
           {
             artist: "Calyx",
             title: "Forever",
-            clipStart: 20,
+            clipStart: 19,
             bio: "Veteran drum & bass producer known for weighty basslines, sharp breakbeats, and polished energy.",
           },
           {
-            artist: "Envy",
-            title: "Damaio",
-            clipStart: 20,
-            bio: "Electronic producer crafting moody, atmospheric tracks with crisp drums and sleek, modern synth textures.",
+            artist: "AUR3LIAN, Milo Merah",
+            title: "Falling",
+            clipStart: 15,
+            bio: "Collaboration pairing airy vocals with shimmering synths and a soft, atmospheric electronic foundation.",
           },
           {
             artist: "AKRS",
@@ -537,24 +641,15 @@
             bio: "Producer crafting crisp, rhythmic electronic cuts with punchy drums and clean, melodic hooks.",
           },
           {
-            artist: "IMANU",
-            title: "Falling apart",
-            bio: "Dutch producer blending cinematic sound design with heavy bass textures and emotional, futuristic atmospheres.",
-          },
-          {
-            artist: "Mont Duamel",
-            title: "Invisible Lens",
-            bio: "Producer building melodic electronic tracks with warm pads, textured percussion, and a late-night glow.",
-          },
-          {
-            artist: "AUR3LIAN, Milo Merah",
-            title: "Falling",
-            bio: "Collaboration pairing airy vocals with shimmering synths and a soft, atmospheric electronic foundation.",
+            artist: "Marino Canal",
+            title: "The Bells",
+            appleId: "1844447412",
+            bio: "Spanish producer known for hypnotic techno grooves, patient builds, and richly detailed sound design.",
           },
           {
             artist: "The Arcturians, DJ Ride",
             title: "Rise Above",
-            clipStart: 20,
+            clipStart: 22,
             bio: "Collab between The Arcturians and DJ Ride, blending cinematic synth work with turntablist energy, heavy bass, and sharp rhythmic cuts.",
           },
           {
@@ -563,14 +658,9 @@
             bio: "Dark, cinematic electronic artist combining ominous harmonies, pulsing bass, and dramatic soundscapes.",
           },
           {
-            artist: "Marino Canal",
-            title: "The Bells",
-            appleId: "1844447412",
-            bio: "Spanish producer known for hypnotic techno grooves, patient builds, and richly detailed sound design.",
-          },
-          {
             artist: "Verses GT",
             title: "Unknown",
+            clipStart: 14,
             bio: "Electronic producer crafting textured, rhythm-forward tracks with a balance of grit, atmosphere, and melodic tension.",
           },
         ],
@@ -591,12 +681,10 @@
       let activeCard = null;
 
       const categoryNotes = {
-        "Albums":
-          "My favorite albums of 2025, ranked. (Below is a pick from each.)",
-        "EPs":
-          "These EPs really stood out for me.",
-        "Singles & Songs":
-          "These songs got lots of plays.",
+        "Albums": "My favorite albums of the year, ranked. (Below is a pick from each.)",
+        "EPs": "These EPs really stood out for me.",
+        "Singles & Songs": "These songs got lots of plays.",
+        "Everything": "All together now.",
       };
 
       const makeCard = (track, options = {}) => {
@@ -633,7 +721,12 @@
 
         const albumLink = document.createElement("a");
         albumLink.className = "album-link";
-        albumLink.textContent = "Open album";
+        albumLink.classList.add("link-icon", "apple");
+        const appleIcon = document.createElement("img");
+        appleIcon.src =
+          "https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_Music_icon.svg";
+        appleIcon.alt = "Apple Music";
+        albumLink.append(appleIcon);
         albumLink.target = "_blank";
         albumLink.rel = "noopener";
         albumLink.hidden = true;
@@ -648,7 +741,12 @@
 
         const spotifyLink = document.createElement("a");
         spotifyLink.className = "album-link";
-        spotifyLink.textContent = "Find on Spotify";
+        spotifyLink.classList.add("link-icon", "spotify");
+        const spotifyIcon = document.createElement("img");
+        spotifyIcon.src =
+          "https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg";
+        spotifyIcon.alt = "Spotify";
+        spotifyLink.append(spotifyIcon);
         spotifyLink.target = "_blank";
         spotifyLink.rel = "noopener";
         spotifyLink.hidden = true;
@@ -661,19 +759,36 @@
           stopPreview("spotify_click");
         });
 
-        const linkDivider = document.createElement("span");
-        linkDivider.className = "link-divider";
-        linkDivider.textContent = "|";
-        linkDivider.hidden = true;
+        const youtubeLink = document.createElement("a");
+        youtubeLink.className = "album-link";
+        youtubeLink.classList.add("link-icon", "youtube");
+        const youtubeIcon = document.createElement("img");
+        youtubeIcon.src =
+          "https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg";
+        youtubeIcon.alt = "YouTube Music";
+        youtubeLink.append(youtubeIcon);
+        youtubeLink.target = "_blank";
+        youtubeLink.rel = "noopener";
+        youtubeLink.hidden = true;
+        youtubeLink.addEventListener("click", () => {
+          gtag("event", "click_youtube_music", {
+            event_category: "outbound",
+            track_title: track.title,
+            track_artist: track.artist,
+          });
+          stopPreview("youtube_click");
+        });
+
+        const linkIcons = document.createElement("div");
+        linkIcons.className = "link-icons";
+        linkIcons.append(albumLink, spotifyLink, youtubeLink);
 
         card.append(
           artwork,
           subtitle,
           bio,
           title,
-          albumLink,
-          linkDivider,
-          spotifyLink,
+          linkIcons,
           audio
         );
         grid.append(card);
@@ -681,6 +796,9 @@
         const query = `${track.title} ${track.artist}${
           track.album ? ` ${track.album}` : ""
         }`;
+        const spotifyUrl = `https://open.spotify.com/search/${encodeURIComponent(
+          `${track.title} ${track.artist}`
+        )}`;
         const apiUrl = track.appleId
           ? `https://itunes.apple.com/lookup?id=${encodeURIComponent(
               track.appleId
@@ -752,11 +870,12 @@
           } else {
             albumLink.hidden = true;
           }
-          spotifyLink.href = `https://open.spotify.com/search/${encodeURIComponent(
+          spotifyLink.href = spotifyUrl;
+          spotifyLink.hidden = false;
+          youtubeLink.href = `https://music.youtube.com/search?q=${encodeURIComponent(
             `${track.title} ${track.artist}`
           )}`;
-          spotifyLink.hidden = false;
-          linkDivider.hidden = false;
+          youtubeLink.hidden = false;
           audio.src = resolved.previewUrl;
           previewReady = true;
         };
@@ -771,6 +890,16 @@
             })
             .catch(() => {
             });
+        }
+
+        if (coverOnly && !prefersTouch.matches) {
+          card.addEventListener("click", () => {
+            if (!spotifyUrl) {
+              return;
+            }
+            window.open(spotifyUrl, "_blank", "noopener");
+            stopPreview("grid_click");
+          });
         }
 
         if (!prefersTouch.matches) {
@@ -844,7 +973,7 @@
 
       const renderCategory = (category) => {
         grid.innerHTML = "";
-        if (category === "Everything Grid") {
+        if (category === "Everything") {
           grid.classList.add("is-covers");
           [
             ...tracksByCategory.Albums,
@@ -880,11 +1009,20 @@
         });
       });
 
-      const initialCategory =
-        new URLSearchParams(window.location.search).get("category") || "Albums";
-      setActiveCategory(
-        tracksByCategory[initialCategory] ? initialCategory : "Albums"
-      );
+      const rawCategory =
+        new URLSearchParams(window.location.search).get("category");
+      const normalizedCategory = rawCategory
+        ? rawCategory.replace(/\+/g, " ").trim()
+        : "";
+      const allowedCategories = [
+        ...Object.keys(tracksByCategory),
+        "Everything",
+      ];
+      const categoryKey =
+        allowedCategories.find(
+          (key) => key.toLowerCase() === normalizedCategory.toLowerCase()
+        ) || "Albums";
+      setActiveCategory(categoryKey);
 
       const fetchPreview = (query) => {
         const apiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(
