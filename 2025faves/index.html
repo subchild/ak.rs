@@ -258,6 +258,12 @@
         margin-bottom: 14px;
       }
 
+      @media (max-width: 600px) {
+        .card.is-featured {
+          grid-column: span 1;
+        }
+      }
+
       .card:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
@@ -733,7 +739,7 @@
             artist: "AKRS",
             title: "Pronk",
             clipStart: 20,
-            bio: "This production from yours was a result of a fun sonic exploration on a rainy weekend.",
+            bio: "This production from yours truly was a result of a fun sonic exploration on a rainy weekend in June.",
           },
           {
             artist: "Marino Canal",
@@ -764,12 +770,16 @@
       const clearSearch = document.getElementById("clear-search");
       const categoryNote = document.getElementById("category-note");
       const prefersTouch = window.matchMedia("(hover: none) and (pointer: coarse)");
+      const narrowLayout = window.matchMedia("(max-width: 600px)");
       let activeAudio = null;
       let activeCard = null;
+      let currentCategory = "Albums";
 
-      const MAX_CONCURRENT_FETCHES = 4;
+      const MAX_CONCURRENT_FETCHES = 3;
+      const MIN_FETCH_INTERVAL_MS = 250;
       const fetchQueue = [];
       let activeFetches = 0;
+      let lastFetchTime = 0;
 
       const runNextFetch = () => {
         if (activeFetches >= MAX_CONCURRENT_FETCHES || fetchQueue.length === 0) {
@@ -792,13 +802,46 @@
           runNextFetch();
         });
 
-      const fetchJsonWithRetry = (url, retries = 2, delayMs = 300) =>
-        queueFetch(() => fetch(url))
+      const readCache = (key) => {
+        try {
+          const raw = sessionStorage.getItem(key);
+          return raw ? JSON.parse(raw) : null;
+        } catch {
+          return null;
+        }
+      };
+
+      const writeCache = (key, value) => {
+        try {
+          sessionStorage.setItem(key, JSON.stringify(value));
+        } catch {
+        }
+      };
+
+      const fetchJsonWithRetry = (url, retries = 2, delayMs = 300) => {
+        const cacheKey = `preview-cache:${url}`;
+        const cached = readCache(cacheKey);
+        if (cached) {
+          return Promise.resolve(cached);
+        }
+        return queueFetch(async () => {
+          const now = Date.now();
+          const waitMs = Math.max(0, MIN_FETCH_INTERVAL_MS - (now - lastFetchTime));
+          if (waitMs) {
+            await new Promise((resolve) => setTimeout(resolve, waitMs));
+          }
+          lastFetchTime = Date.now();
+          return fetch(url);
+        })
           .then((response) => {
             if (!response.ok) {
               throw new Error(`HTTP ${response.status}`);
             }
             return response.json();
+          })
+          .then((data) => {
+            writeCache(cacheKey, data);
+            return data;
           })
           .catch((error) => {
             if (retries <= 0) {
@@ -808,6 +851,7 @@
               fetchJsonWithRetry(url, retries - 1, delayMs * 2)
             );
           });
+      };
 
       const categoryNotes = {
         "Albums": "My favorite albums of the year, ranked. (Below is a pick from each.)",
@@ -1139,12 +1183,14 @@
 
         grid.classList.remove("is-covers");
         (tracksByCategory[category] || []).forEach((track, index) => {
-          const featured = category === "Albums" && index < 2;
+          const featured =
+            category === "Albums" && index < 2 && !narrowLayout.matches;
           makeCard(track, { featured });
         });
       };
 
       const setActiveCategory = (category) => {
+        currentCategory = category;
         toggleButtons.forEach((btn) => {
           const isActive = btn.dataset.category === category;
           btn.classList.toggle("is-active", isActive);
@@ -1180,6 +1226,10 @@
           (key) => key.toLowerCase() === normalizedCategory.toLowerCase()
         ) || "Albums";
       setActiveCategory(categoryKey);
+
+      narrowLayout.addEventListener("change", () => {
+        setActiveCategory(currentCategory);
+      });
 
       const fetchPreview = (query) => {
         const apiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(
