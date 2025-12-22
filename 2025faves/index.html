@@ -891,7 +891,7 @@
       };
 
       const makeCard = (track, options = {}) => {
-        const { match, coverOnly = false } = options;
+        const { match, coverOnly = false, category = currentCategory, index } = options;
         const card = document.createElement("article");
         card.className = "card";
         if (coverOnly) {
@@ -1042,6 +1042,8 @@
             event_label: reason,
             track_title: track.title,
             track_artist: track.artist,
+            track_category: category,
+            track_index: index,
             hover_seconds: Math.round(durationSeconds * 10) / 10,
           });
         };
@@ -1251,16 +1253,30 @@
         if (category === "Everything") {
           grid.classList.add("is-covers");
           [
-            ...tracksByCategory.Albums,
-            ...tracksByCategory.EPs,
-            ...tracksByCategory["Singles & Songs"],
-          ].forEach((track) => makeCard(track, { coverOnly: true }));
+            ...tracksByCategory.Albums.map((track, index) => ({
+              track,
+              category: "Albums",
+              index: index + 1,
+            })),
+            ...tracksByCategory.EPs.map((track, index) => ({
+              track,
+              category: "EPs",
+              index: index + 1,
+            })),
+            ...tracksByCategory["Singles & Songs"].map((track, index) => ({
+              track,
+              category: "Singles & Songs",
+              index: index + 1,
+            })),
+          ].forEach(({ track, category, index }) =>
+            makeCard(track, { coverOnly: true, category, index })
+          );
           return;
         }
 
         grid.classList.remove("is-covers");
-        (tracksByCategory[category] || []).forEach((track) => {
-          makeCard(track);
+        (tracksByCategory[category] || []).forEach((track, index) => {
+          makeCard(track, { category, index: index + 1 });
         });
       };
 
