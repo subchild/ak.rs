@@ -405,6 +405,24 @@ input, select, textarea {
 		border: 0;
 	}
 
+	.spotify-embed {
+		margin: 0 0 1.25em 0;
+		max-width: 100%;
+		overflow: hidden;
+	}
+
+	.spotify-embed iframe {
+		border: 0;
+		border-radius: 12px;
+		display: block;
+		max-width: 100%;
+		width: 100%;
+	}
+
+	#guitar .project-links {
+		font-size: 0.95em;
+	}
+
 	.video-container {
 		display: flex;
 		justify-content: center;
