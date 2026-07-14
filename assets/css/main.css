@@ -2914,6 +2914,53 @@ input, select, textarea {
 			vertical-align: 0.08em;
 		}
 
+		.ai-project h4 a.ai-project-logo-link {
+			align-items: flex-end;
+			display: inline-flex;
+			line-height: 1;
+		}
+
+		.ai-project h4 a.ai-project-logo-link[target="_blank"]::after {
+			line-height: 1;
+			margin-left: 0.65em;
+			transform: translateY(-3px);
+			vertical-align: 0;
+		}
+
+		.ai-project h4 a.ai-project-logo-link-supersolo[target="_blank"]::after {
+			transform: translateY(-5px);
+		}
+
+		.ai-project h4 a.ai-project-logo-link-dropstem[target="_blank"]::after {
+			transform: translateY(-4px);
+		}
+
+		.ai-project h4 a.ai-project-logo-link-drift[target="_blank"]::after {
+			transform: translateY(-1px);
+		}
+
+		.ai-project h4 a.ai-project-logo-link-soundscout[target="_blank"]::after {
+			transform: translateY(-3px);
+		}
+
+			.ai-project h4 a.ai-project-logo-link img.ai-project-logo {
+				display: block;
+				height: 1.25em;
+				width: auto;
+			}
+
+			.ai-project h4 a.ai-project-logo-link img.ai-project-logo-small {
+				height: 1.05em;
+			}
+
+			.ai-project h4 a.ai-project-logo-link img.ai-project-logo-dropstem {
+				height: 1.275em;
+			}
+
+			.ai-project h4 a.ai-project-logo-link img.ai-project-logo-soundscout {
+				height: 0.947625em;
+			}
+
 	.ai-project-shot {
 		background: #f3f5f7;
 		border-radius: 0.35em;
