@@ -2895,9 +2895,13 @@ input, select, textarea {
 			margin: 0;
 		}
 
-	.ai-project h4 {
-		margin: 0 0 0.75em 0;
-	}
+		.ai-project h4 {
+			margin: 0 0 0.75em 0;
+		}
+
+		.ai-project p {
+			font-size: 0.86em;
+		}
 
 		.ai-project h4 a {
 			color: #4995bf;
