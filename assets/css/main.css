@@ -2947,6 +2947,10 @@ input, select, textarea {
 			transform: translateY(-3px);
 		}
 
+		.ai-project h4 a.ai-project-logo-link-bounce[target="_blank"]::after {
+			transform: translateY(-2px);
+		}
+
 			.ai-project h4 a.ai-project-logo-link img.ai-project-logo {
 				display: block;
 				height: 1.25em;
@@ -2963,6 +2967,10 @@ input, select, textarea {
 
 			.ai-project h4 a.ai-project-logo-link img.ai-project-logo-soundscout {
 				height: 0.947625em;
+			}
+
+			.ai-project h4 a.ai-project-logo-link img.ai-project-logo-bounce {
+				height: 0.99275em;
 			}
 
 	.ai-project-shot {

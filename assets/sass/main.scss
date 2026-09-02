@@ -1105,6 +1105,10 @@ $size-header-pad: 4em;
 			img.ai-project-logo-soundscout {
 				height: 0.947625em;
 			}
+
+			img.ai-project-logo-bounce {
+				height: 0.99275em;
+			}
 		}
 
 		a.ai-project-logo-link[target="_blank"]::after {
@@ -1128,6 +1132,10 @@ $size-header-pad: 4em;
 
 		a.ai-project-logo-link-soundscout[target="_blank"]::after {
 			transform: translateY(-3px);
+		}
+
+		a.ai-project-logo-link-bounce[target="_blank"]::after {
+			transform: translateY(-2px);
 		}
 	}
 
